@@ -34,7 +34,11 @@
             android:layout_weight="1"
             android:backgroundTint="@color/yp_white"
             android:text="@string/title_search"
-            android:textColor="@color/yp_black" />
+            android:textColor="@color/yp_black"
+            app:icon="@drawable/search_light_mode"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/yp_black"/>
 
         <Button
             android:layout_width="match_parent"
@@ -43,7 +47,11 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/yp_white"
             android:text="@string/title_media"
-            android:textColor="@color/yp_black" />
+            android:textColor="@color/yp_black"
+            app:icon="@drawable/library_light_mode"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/yp_black"/>
 
         <Button
             android:layout_width="match_parent"
@@ -52,7 +60,11 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/yp_white"
             android:text="@string/title_settings"
-            android:textColor="@color/yp_black" />
+            android:textColor="@color/yp_black"
+            app:icon="@drawable/settings_light_mode"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/yp_black"/>
     </LinearLayout>
 
 </LinearLayout>
