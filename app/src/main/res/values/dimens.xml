@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <dimen name="MainButtonsTextSize">22sp</dimen>
+    <dimen name="SettingsTextSize">16sp</dimen>
+    <dimen name="MargiTopTextSize">16dp</dimen>
+    <dimen name="PaddingStartTextSize">16dp</dimen>
+    <dimen name="PaddingEndTextSize">6dp</dimen>
+    <dimen name="MainThemeTextSize">26sp</dimen>
+</resources>
