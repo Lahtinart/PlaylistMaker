@@ -28,8 +28,8 @@
         android:paddingVertical="20dp"
         android:textSize="@dimen/SettingsTextSize"
         android:textColor="@color/Black"
-        app:thumbTint="@color/yp_text_gray"
-        app:trackTint="@color/yp_light_gray"/>
+        app:thumbTint="@color/switch_thumb_color"
+        app:trackTint="@color/switch_track_color"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/share_item"
