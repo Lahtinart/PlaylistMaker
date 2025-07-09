@@ -1,135 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:background="@color/yp_white"
-    android:orientation="horizontal">
+    android:paddingTop="8dp"
+    tools:context=".SettingsActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="4dp">
+        app:title="@string/title_settings"
+        app:navigationIcon="@drawable/arrow_left_light_mode"
+        app:titleTextColor="@color/yp_black"
+        android:background="?attr/colorSurface"
+        app:titleCentered="false" />
 
-        <TextView
-            android:id="@+id/back_button"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:drawableStart="@drawable/arrow_left_light_mode"
-            android:gravity="center_vertical"
-            android:text="@string/title_settings"
-            android:textColor="@color/yp_black"
-            android:textSize="@dimen/MainButtonsTextSize" />
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/my_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_night_mode"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:textSize="@dimen/SettingsTextSize"
+        android:textColor="@color/Black"
+        app:thumbTint="@color/yp_text_gray"
+        app:trackTint="@color/yp_light_gray"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:paddingStart="@dimen/MargiTopTextSize"
-            android:paddingEnd="@dimen/PaddingEndTextSize">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/share_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/share_light_mode"
+        android:drawablePadding="8dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:text="@string/title_share"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/SettingsTextSize" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:text="@string/title_night_mode"
-                android:textColor="@color/Black"
-                android:textSize="@dimen/SettingsTextSize"
-                tools:ignore="RelativeOverlap" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/support_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/support_light_mode"
+        android:drawablePadding="8dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:text="@string/title_support"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/SettingsTextSize" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/my_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                app:showText="false"
-                android:layout_marginEnd="6dp"
-                android:layout_alignParentEnd="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-        </RelativeLayout>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/user_agreement_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/arrow_forward_light_mode"
+        android:drawablePadding="8dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:text="@string/title_user_agreement"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/SettingsTextSize" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingStart="@dimen/MargiTopTextSize"
-            android:paddingEnd="@dimen/PaddingEndTextSize">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_share"
-                android:textColor="@color/Black"
-                android:textSize="@dimen/SettingsTextSize"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/share_light_mode"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="6dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="6dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_support"
-                android:textColor="@color/Black"
-                android:textSize="@dimen/SettingsTextSize"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                tools:ignore="RelativeOverlap" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/support_light_mode"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="6dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingStart="@dimen/MargiTopTextSize"
-            android:paddingEnd="@dimen/PaddingEndTextSize">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_user_agreement"
-                android:textColor="@color/Black"
-                android:textSize="@dimen/SettingsTextSize"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                tools:ignore="RelativeOverlap" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/arrow_forward_light_mode"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="6dp" />
-        </RelativeLayout>
-
-    </LinearLayout>
 </LinearLayout>
