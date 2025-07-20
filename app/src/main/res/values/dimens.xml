@@ -6,4 +6,7 @@
     <dimen name="PaddingStartTextSize">16dp</dimen>
     <dimen name="PaddingEndTextSize">6dp</dimen>
     <dimen name="MainThemeTextSize">26sp</dimen>
+    <dimen name="DrawablePadding">8dp</dimen>
+    <dimen name="PaddingVertical">20dp</dimen>
+    <dimen name="PaddingHorizontal">16dp</dimen>
 </resources>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MessageTextStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/yp_white</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="SettingsTextStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:paddingStart">@dimen/PaddingStartTextSize</item>
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:textSize">@dimen/SettingsTextSize</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="SettingsTwoTextStyle">
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:textSize">@dimen/SettingsTextSize</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:drawablePadding">@dimen/DrawablePadding</item>
+        <item name="android:paddingStart">@dimen/PaddingHorizontal</item>
+        <item name="android:paddingEnd">@dimen/PaddingHorizontal</item>
+        <item name="android:paddingTop">@dimen/PaddingVertical</item>
+        <item name="android:paddingBottom">@dimen/PaddingVertical</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="Widget.PlayListMaker.MainButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/yp_white</item>
+        <item name="android:textColor">@color/yp_black</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">8dp</item>
+        <item name="iconTint">@color/yp_black</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+</resources>
