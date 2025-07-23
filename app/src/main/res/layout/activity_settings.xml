@@ -13,7 +13,7 @@
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
+        android:background="@color/yp_white"
         app:navigationIcon="@drawable/arrow_left_light_mode"
         app:title="@string/title_settings"
         app:titleCentered="false"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:text="@string/title_night_mode"
         app:thumbTint="@color/switch_thumb_color"
-        app:trackTint="@color/switch_track_color" />
+        app:trackTint="@color/switch_track_color"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/share_item"
@@ -51,5 +51,6 @@
         android:drawableEnd="@drawable/arrow_forward_light_mode"
         style="@style/SettingsTwoTextStyle"
         android:text="@string/title_user_agreement" />
+
 
 </LinearLayout>

@@ -1,52 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/yp_blue"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingBottom="28dp"
+    android:paddingTop="10dp"
+    tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:text="@string/app_name"
-        android:textColor="@color/yp_white"
-        android:textSize="26sp"
-        style="@style/MessageTextStyle"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="12dp"
-        android:orientation="horizontal"/>
+        android:text="@string/app_name"
+        android:textSize="26sp"
+        style="@style/MessageTextStyle" />
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        app:cornerRadius="16dp"
-        android:weightSum="3">
+        android:layout_height="80dp" />
 
-        <Button
-            android:id="@+id/button1"
-            style="@style/Widget.PlayListMaker.MainButton"
-            android:text="@string/title_search"
-            app:icon="@drawable/search_light_mode" />
+    <Button
+        android:id="@+id/button1"
+        style="@style/Widget.PlayListMaker.MainButton"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/title_search"
+        app:icon="@drawable/search_light_mode"
+        android:elevation="0dp"
+        android:stateListAnimator="@null" />
 
-        <Button
-            android:id="@+id/button2"
-            style="@style/Widget.PlayListMaker.MainButton"
-            android:layout_marginTop="16dp"
-            android:text="@string/title_media"
-            app:icon="@drawable/library_light_mode" />
+    <Button
+        android:id="@+id/button2"
+        style="@style/Widget.PlayListMaker.MainButton"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:text="@string/title_media"
+        app:icon="@drawable/library_light_mode"
+        android:elevation="0dp"
+        android:stateListAnimator="@null" />
 
-        <Button
-            android:id="@+id/button3"
-            style="@style/Widget.PlayListMaker.MainButton"
-            android:layout_marginTop="16dp"
-            android:text="@string/title_settings"
-            app:icon="@drawable/settings_light_mode" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/button3"
+        style="@style/Widget.PlayListMaker.MainButton"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:text="@string/title_settings"
+        app:icon="@drawable/settings_light_mode"
+        android:elevation="0dp"
+        android:stateListAnimator="@null" />
 
 </LinearLayout>
