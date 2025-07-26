@@ -49,38 +49,39 @@ class SettingsActivity : AppCompatActivity() {
         shareTextView.setOnClickListener {
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Хочешь научиться Android-разработке? Попробуй курс от Практикума: https://practicum.yandex.ru/android-developer/")
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message))
                 type = "text/plain"
             }
-            startActivity(Intent.createChooser(shareIntent, "Поделиться через"))
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_chooser_title)))
         }
 
         val supportTextView = findViewById<MaterialTextView>(R.id.support_item)
 
         supportTextView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:lahtinart@gmail.com")
-                putExtra(Intent.EXTRA_SUBJECT, "Сообщение разработчикам и разработчицам приложения Playlist Maker")
-                putExtra(Intent.EXTRA_TEXT, "Спасибо разработчикам и разработчицам за крутое приложение!")
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "message/rfc822"
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.mail_to)))
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject))
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text))
             }
 
             try {
-                startActivity(intent)
+                startActivity(Intent.createChooser(intent, getString(R.string.send_email)))
             } catch (e: ActivityNotFoundException) {
-                Toast.makeText(this, "Нет почтового клиента на устройстве", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.no_email_client), Toast.LENGTH_SHORT).show()
             }
         }
 
         val userAgreementTextView = findViewById<MaterialTextView>(R.id.user_agreement_item)
 
         userAgreementTextView.setOnClickListener {
-            val url = "https://yandex.ru/legal/practicum_offer/ru/"
+            val url = getString(R.string.url_user_agreement)
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
 
             try {
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
-                Toast.makeText(this, "Не найдено приложение для открытия ссылки", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.no_app_to_open_link), Toast.LENGTH_SHORT).show()
             }
         }
     }
