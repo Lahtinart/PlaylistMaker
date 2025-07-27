@@ -20,5 +20,7 @@
     <string name="no_app_to_open_link">Не найдено приложение для открытия ссылки</string>
     <string name="send_email">Отправить письмо</string>
     <string name="search_hint">Поиск</string>
+    <string name="clear_search">Очистить поиск</string>
+    <string name="search_icon">Иконка поиска</string>
 
 </resources>
