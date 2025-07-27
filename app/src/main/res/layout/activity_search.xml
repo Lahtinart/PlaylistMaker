@@ -34,7 +34,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/search_edit_text"
-        style="@style/SearchBoxText" />
+        style="@style/SearchBoxText"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

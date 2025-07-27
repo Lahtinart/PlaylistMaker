@@ -43,19 +43,27 @@
         <item name="iconTint">@color/yp_black</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
+        <item name="shapeAppearanceOverlay">@style/RoundedButtonShape</item>
     </style>
 
-    
+    <style name="RoundedButtonShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
     <style name="SearchBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/yp_black</item>
         <item name="hintTextColor">@color/yp_text_gray</item>
         <item name="endIconTint">@color/yp_black</item>
-        <item name="shapeAppearance">@style/ShapeAppearance.TextInputLayout.Rounded</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="shapeAppearanceOverlay">@style/SearchBoxShape</item>
     </style>
 
-        <style name="ShapeAppearance.TextInputLayout.Rounded" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-            <item name="cornerSize">16dp</item>
-        </style>
+    <style name="SearchBoxShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
 
     <style name="SearchBoxText">
         <item name="android:layout_width">match_parent</item>
@@ -73,5 +81,7 @@
         <item name="android:textFontWeight">400</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textSize">16sp</item>
+
+
     </style>
 </resources>
