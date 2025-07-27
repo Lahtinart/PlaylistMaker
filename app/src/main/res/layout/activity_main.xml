@@ -1,19 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/yp_blue"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="start"
+        android:text="@string/app_name"
+        android:textColor="@color/yp_white"
+        android:textSize="26sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="12dp"
+        android:orientation="horizontal"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        app:cornerRadius="16dp"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/button1"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/yp_white"
+            android:text="@string/title_search"
+            android:textSize="22sp"
+            android:textColor="@color/yp_black"
+            app:icon="@drawable/search_light_mode"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/yp_black"/>
+
+        <Button
+            android:id="@+id/button2"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/yp_white"
+            android:text="@string/title_media"
+            android:textSize="22sp"
+            android:textColor="@color/yp_black"
+            app:icon="@drawable/library_light_mode"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/yp_black"/>
+
+        <Button
+            android:id="@+id/button3"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/yp_white"
+            android:text="@string/title_settings"
+            android:textColor="@color/yp_black"
+            android:textSize="22sp"
+            app:icon="@drawable/settings_light_mode"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/yp_black"/>
+    </LinearLayout>
+
+</LinearLayout>
