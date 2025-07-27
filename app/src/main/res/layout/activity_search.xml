@@ -24,27 +24,17 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         app:hintEnabled="false"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/SearchBox"
         app:startIconDrawable="@drawable/search_light_mode"
         app:startIconContentDescription="@string/search_icon"
+        app:startIconTint="@color/search_icon"
         app:endIconMode="clear_text"
         app:endIconContentDescription="@string/clear_search"
         app:boxStrokeColor="@color/yp_black">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/search_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:paddingStart="0dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:inputType="text"
-        android:maxLines="1"
-        android:textColor="@color/yp_black"
-        android:textColorHint="@color/yp_text_gray"
-        android:background="@color/yp_light_gray"
-        android:hint="@string/search_hint"
-        android:gravity="start|center_vertical" />
+        style="@style/SearchBoxText" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

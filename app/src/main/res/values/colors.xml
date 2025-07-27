@@ -16,6 +16,9 @@
     <color name="switcher_stripe">#E6E8EB</color>
     <color name="switcher_on">#3772E7</color>
     <color name="switcher_stripe_on">#9FBBF3</color>
+    <color name="search_box">#E6E8EB</color>
+    <color name="search_text_hint">#AEAFB4</color>
+    <color name="search_icon">#AEAFB4</color>
 
 </resources>
 

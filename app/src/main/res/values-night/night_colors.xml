@@ -8,4 +8,7 @@
     <color name="Black">#1A1B22</color>
     <color name="switcher_circle">#3772E7</color>
     <color name="switcher_stripe">#9FBBF3</color>
+    <color name="search_box">#FFFFFFFF</color>
+    <color name="search_text_hint">#1A1B22</color>
+    <color name="search_icon">#1A1B22</color>
 </resources>
