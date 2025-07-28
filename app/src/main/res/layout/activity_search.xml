@@ -28,13 +28,13 @@
         app:startIconDrawable="@drawable/search_light_mode"
         app:startIconContentDescription="@string/search_icon"
         app:startIconTint="@color/search_icon"
+        app:endIconDrawable="@drawable/clear_light_mode"
         app:endIconMode="clear_text"
-        app:endIconContentDescription="@string/clear_search"
-        app:boxStrokeColor="@color/yp_black">
+        app:endIconContentDescription="@string/clear_search">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/search_edit_text"
-        style="@style/SearchBoxText"/>
+        style="@style/SearchBoxText" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

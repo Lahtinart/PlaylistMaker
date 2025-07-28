@@ -1,5 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/yp_blue</item>
+        <item name="colorOnPrimary">@color/yp_white</item>
+        <item name="colorPrimaryVariant">@color/yp_blue</item>
+        <item name="colorSurface">@color/yp_white</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+        <item name="shapeAppearanceSmallComponent">@style/RoundedCorners</item>
+    </style>
 
+    <style name="RoundedCorners" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
     </style>
 </resources>

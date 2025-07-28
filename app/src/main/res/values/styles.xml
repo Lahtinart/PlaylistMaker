@@ -29,7 +29,7 @@
         <item name="android:textFontWeight">400</item>
     </style>
 
-    <style name="Widget.PlayListMaker.MainButton" parent="Widget.MaterialComponents.Button">
+    <style name="Widget.PlayListMaker.MainButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:foreground">@null</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
@@ -52,14 +52,15 @@
     </style>
 
     <style name="SearchBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/yp_black</item>
-        <item name="hintTextColor">@color/yp_text_gray</item>
-        <item name="endIconTint">@color/yp_black</item>
+        <item name="boxBackgroundColor">@color/search_box</item>
         <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/transparent_selector</item>
+        <item name="hintTextColor">@color/yp_text_gray</item>
+        <item name="endIconTint">@color/yp_text_gray</item>
         <item name="shapeAppearanceOverlay">@style/SearchBoxShape</item>
     </style>
 
-    <style name="SearchBoxShape">
+    <style name="SearchBoxShape" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
@@ -75,7 +76,6 @@
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/yp_black</item>
         <item name="android:textColorHint">@color/search_text_hint</item>
-        <item name="android:background">@color/search_box</item>
         <item name="android:hint">@string/search_hint</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:textFontWeight">400</item>

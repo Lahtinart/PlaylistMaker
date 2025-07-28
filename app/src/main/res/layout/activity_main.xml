@@ -24,36 +24,25 @@
         android:layout_width="match_parent"
         android:layout_height="80dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button1"
         style="@style/Widget.PlayListMaker.MainButton"
-        android:layout_height="0dp"
-        android:layout_weight="1"
         android:text="@string/title_search"
         app:icon="@drawable/search_light_mode"
-        android:elevation="0dp"
-        android:stateListAnimator="@null" />
+        android:layout_marginTop="0dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button2"
         style="@style/Widget.PlayListMaker.MainButton"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="16dp"
         android:text="@string/title_media"
         app:icon="@drawable/library_light_mode"
-        android:elevation="0dp"
-        android:stateListAnimator="@null" />
+        android:layout_marginTop="16dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button3"
         style="@style/Widget.PlayListMaker.MainButton"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="16dp"
         android:text="@string/title_settings"
         app:icon="@drawable/settings_light_mode"
-        android:elevation="0dp"
-        android:stateListAnimator="@null" />
+        android:layout_marginTop="16dp" />
 
 </LinearLayout>
