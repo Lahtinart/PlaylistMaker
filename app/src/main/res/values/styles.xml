@@ -3,7 +3,14 @@
     <style name="MessageTextStyle">
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/yp_white</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="ToolbarTitleStyle" >
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/tool_bar</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
     </style>

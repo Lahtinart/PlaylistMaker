@@ -19,6 +19,7 @@
     <color name="search_box">#E6E8EB</color>
     <color name="search_text_hint">#AEAFB4</color>
     <color name="search_icon">#AEAFB4</color>
+    <color name="tool_bar">#FFFFFFFF</color>
 
 </resources>
 

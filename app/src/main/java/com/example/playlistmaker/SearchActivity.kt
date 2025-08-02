@@ -31,7 +31,7 @@ class SearchActivity : AppCompatActivity() {
 
         val toolbar = findViewById<MaterialToolbar>(R.id.topSearchBar)
         toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            finish()
         }
 
         searchEditText = findViewById(R.id.search_edit_text)

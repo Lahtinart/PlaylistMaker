@@ -28,7 +28,6 @@ class SettingsActivity : AppCompatActivity() {
 
         val toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
         toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
             finish()
         }
 

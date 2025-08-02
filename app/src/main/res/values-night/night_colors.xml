@@ -11,4 +11,5 @@
     <color name="search_box">#FFFFFFFF</color>
     <color name="search_text_hint">#1A1B22</color>
     <color name="search_icon">#1A1B22</color>
+    <color name="tool_bar">#FFFFFFFF</color>
 </resources>

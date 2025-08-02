@@ -8,6 +8,13 @@
         <item name="android:textFontWeight">500</item>
     </style>
 
+    <style name="ToolbarTitleStyle" >
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/tool_bar</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
     <style name="SettingsTwoTextStyle">
         <item name="android:textColor">@color/yp_black</item>
         <item name="android:textSize">@dimen/SettingsTextSize</item>
