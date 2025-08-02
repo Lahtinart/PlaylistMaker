@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/yp_white"
+    android:orientation="vertical"
     android:paddingTop="8dp"
     tools:context=".SettingsActivity">
 
@@ -13,58 +13,44 @@
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/title_settings"
+        android:background="@color/yp_white"
         app:navigationIcon="@drawable/arrow_left_light_mode"
-        app:titleTextColor="@color/yp_black"
-        android:background="?attr/colorSurface"
-        app:titleCentered="false" />
+        app:title="@string/title_settings"
+        app:titleCentered="false"
+        app:titleTextColor="@color/yp_black" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/my_switch"
+        style="@style/SettingsTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title_night_mode"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="20dp"
-        android:textSize="@dimen/SettingsTextSize"
-        android:textColor="@color/Black"
         app:thumbTint="@color/switch_thumb_color"
         app:trackTint="@color/switch_track_color"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/share_item"
+        style="@style/SettingsTwoTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/share_light_mode"
-        android:drawablePadding="8dp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="20dp"
-        android:text="@string/title_share"
-        android:textColor="@color/Black"
-        android:textSize="@dimen/SettingsTextSize" />
+        android:text="@string/title_share" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/support_item"
+        style="@style/SettingsTwoTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/support_light_mode"
-        android:drawablePadding="8dp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="20dp"
-        android:text="@string/title_support"
-        android:textColor="@color/Black"
-        android:textSize="@dimen/SettingsTextSize" />
+        android:text="@string/title_support" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/user_agreement_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/arrow_forward_light_mode"
-        android:drawablePadding="8dp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="20dp"
-        android:text="@string/title_user_agreement"
-        android:textColor="@color/Black"
-        android:textSize="@dimen/SettingsTextSize" />
+        style="@style/SettingsTwoTextStyle"
+        android:text="@string/title_user_agreement" />
+
 
 </LinearLayout>

@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="yp_text_gray">#DDDDDD</color>
+    <color name="yp_text_gray">#FFFFFFFF</color>
     <color name="yp_light_gray">#444444</color>
+    <color name="yp_blue">#1A1B22</color>
+    <color name="yp_black">#FFFFFFFF</color>
+    <color name="yp_white">#1A1B22</color>
+    <color name="Black">#1A1B22</color>
+    <color name="switcher_circle">#3772E7</color>
+    <color name="switcher_stripe">#9FBBF3</color>
+    <color name="search_box">#FFFFFFFF</color>
+    <color name="search_text_hint">#1A1B22</color>
+    <color name="search_icon">#1A1B22</color>
+    <color name="tool_bar">#FFFFFFFF</color>
 </resources>

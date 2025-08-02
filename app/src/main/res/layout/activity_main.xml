@@ -1,78 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/yp_blue"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingBottom="28dp"
+    android:paddingTop="10dp"
+    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:text="@string/app_name"
-        android:textColor="@color/yp_white"
-        android:textSize="26sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="12dp"
-        android:orientation="horizontal"/>
-
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBarMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        app:cornerRadius="16dp"
-        android:weightSum="3">
+        android:layout_height="wrap_content"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/tool_bar"
+        app:titleTextAppearance="@style/ToolbarTitleStyle" />
 
-        <Button
-            android:id="@+id/button1"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/yp_white"
-            android:text="@string/title_search"
-            android:textSize="22sp"
-            android:textColor="@color/yp_black"
-            app:icon="@drawable/search_light_mode"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@color/yp_black"/>
 
-        <Button
-            android:id="@+id/button2"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/yp_white"
-            android:text="@string/title_media"
-            android:textSize="22sp"
-            android:textColor="@color/yp_black"
-            app:icon="@drawable/library_light_mode"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@color/yp_black"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button1"
+        style="@style/Widget.PlayListMaker.MainButton"
+        android:text="@string/title_search"
+        app:icon="@drawable/search_light_mode"
+        android:layout_marginTop="80dp" />
 
-        <Button
-            android:id="@+id/button3"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/yp_white"
-            android:text="@string/title_settings"
-            android:textColor="@color/yp_black"
-            android:textSize="22sp"
-            app:icon="@drawable/settings_light_mode"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@color/yp_black"/>
-    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button2"
+        style="@style/Widget.PlayListMaker.MainButton"
+        android:text="@string/title_media"
+        app:icon="@drawable/library_light_mode"
+        android:layout_marginTop="16dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button3"
+        style="@style/Widget.PlayListMaker.MainButton"
+        android:text="@string/title_settings"
+        app:icon="@drawable/settings_light_mode"
+        android:layout_marginTop="16dp" />
 
 </LinearLayout>

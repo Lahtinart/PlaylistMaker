@@ -16,6 +16,7 @@
         android:text="@string/title_media"
         android:textColor="@color/yp_white"
         android:textSize="26sp"
+        style="@style/MessageTextStyle"
         android:layout_marginTop="10dp"
         android:layout_marginStart="12dp"
         app:layout_constraintTop_toTopOf="parent"

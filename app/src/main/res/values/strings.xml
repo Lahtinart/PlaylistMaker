@@ -8,4 +8,19 @@
     <string name="title_share">Поделиться приложением</string>
     <string name="title_user_agreement">Пользовательское соглашение</string>
     <string name="title_switch">Переключение</string>
+    <string name="share_message">
+    Хочешь научиться Android-разработке? Попробуй курс от Практикума: https://practicum.yandex.ru/android-developer/
+</string>
+    <string name="share_chooser_title">поделиться через</string>
+    <string name="mail_to">mailto:lahtinart@gmail.com</string>
+    <string name="email_subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="email_text">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="no_email_client">Нет почтового клиента на устройстве</string>
+    <string name="url_user_agreement">https://yandex.ru/legal/practicum_offer/ru/</string>
+    <string name="no_app_to_open_link">Не найдено приложение для открытия ссылки</string>
+    <string name="send_email">Отправить письмо</string>
+    <string name="search_hint">Поиск</string>
+    <string name="clear_search">Очистить поиск</string>
+    <string name="search_icon">Иконка поиска</string>
+
 </resources>

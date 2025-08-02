@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MessageTextStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/yp_white</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="ToolbarTitleStyle" >
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/tool_bar</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="SettingsTextStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:paddingStart">@dimen/PaddingStartTextSize</item>
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:textSize">@dimen/SettingsTextSize</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="SettingsTwoTextStyle">
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:textSize">@dimen/SettingsTextSize</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:drawablePadding">@dimen/DrawablePadding</item>
+        <item name="android:paddingStart">@dimen/PaddingHorizontal</item>
+        <item name="android:paddingEnd">@dimen/PaddingHorizontal</item>
+        <item name="android:paddingTop">@dimen/PaddingVertical</item>
+        <item name="android:paddingBottom">@dimen/PaddingVertical</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="Widget.PlayListMaker.MainButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:foreground">@null</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/yp_white</item>
+        <item name="android:textColor">@color/yp_black</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">8dp</item>
+        <item name="iconTint">@color/yp_black</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="shapeAppearanceOverlay">@style/RoundedButtonShape</item>
+    </style>
+
+    <style name="RoundedButtonShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="SearchBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/search_box</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/transparent_selector</item>
+        <item name="hintTextColor">@color/yp_text_gray</item>
+        <item name="endIconTint">@color/yp_text_gray</item>
+        <item name="shapeAppearanceOverlay">@style/SearchBoxShape</item>
+    </style>
+
+    <style name="SearchBoxShape" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+
+    <style name="SearchBoxText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/yp_black</item>
+        <item name="android:textColorHint">@color/search_text_hint</item>
+        <item name="android:hint">@string/search_hint</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">16sp</item>
+
+
+    </style>
+</resources>
