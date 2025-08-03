@@ -3,11 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:drawableEnd="@drawable/arrow_forward_light_mode"
     android:minHeight="72dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
+    android:paddingStart="13dp"
+    android:paddingEnd="12dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/arrow_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/arrow_forward_light_mode"
+        android:contentDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/track_image"
@@ -21,41 +32,66 @@
         android:clipToOutline="true"
         android:background="@drawable/image_placeholder" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/track_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="?attr/colorOnBackground"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/ys_display_regular"
+        android:textFontWeight="400"
         android:maxLines="1"
         android:ellipsize="end"
         app:layout_constraintStart_toEndOf="@id/track_image"
         app:layout_constraintTop_toTopOf="@id/track_image"
-        app:layout_constraintEnd_toStartOf="@id/track_time"
-        android:layout_marginStart="12dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="44dp" />
 
-    <TextView
-        android:id="@+id/artist_name"
+    <LinearLayout
+        android:id="@+id/info_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/yp_black"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:ellipsize="end"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="@id/track_name"
         app:layout_constraintTop_toBottomOf="@id/track_name"
-        app:layout_constraintEnd_toEndOf="@id/track_name"
-        android:layout_marginTop="4dp" />
-
-    <TextView
-        android:id="@+id/track_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/yp_black"
-        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/track_name"
-        android:layout_marginEnd="4dp" />
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="44dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/artist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/yp_black"
+            android:textSize="11sp"
+            android:fontFamily="@font/ys_display_regular"
+            android:textFontWeight="400"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <ImageView
+            android:id="@+id/dot_icon"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:src="@drawable/dot_icon"
+            android:contentDescription="@null" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/track_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/yp_black"
+            android:textSize="11sp"
+            android:fontFamily="@font/ys_display_regular"
+            android:textFontWeight="400" />
+
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

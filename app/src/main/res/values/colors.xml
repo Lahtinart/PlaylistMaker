@@ -20,7 +20,7 @@
     <color name="search_text_hint">#AEAFB4</color>
     <color name="search_icon">#AEAFB4</color>
     <color name="tool_bar">#FFFFFFFF</color>
-
+    <color name="dot_icon">#1A1B22</color>
 
 </resources>
 
