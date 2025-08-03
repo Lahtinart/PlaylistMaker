@@ -22,5 +22,6 @@
     <string name="search_hint">Поиск</string>
     <string name="clear_search">Очистить поиск</string>
     <string name="search_icon">Иконка поиска</string>
+    <string name="track_cover">Track cover image</string>
 
 </resources>
