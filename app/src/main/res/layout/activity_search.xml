@@ -25,7 +25,7 @@
         android:layout_marginStart="@dimen/search_margin_start"
         android:layout_marginEnd="@dimen/search_margin_end"
         android:layout_marginTop="@dimen/search_margin_top"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         app:hintEnabled="false"
         style="@style/SearchBox"
         app:startIconDrawable="@drawable/search_light_mode"
