@@ -22,7 +22,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .load(track.artworkUrl100)
             .placeholder(R.drawable.image_placeholder)
             .error(R.drawable.image_placeholder)
-            .transform(RoundedCorners(16))
+            .transform(RoundedCorners(2))
             .into(trackImage)
     }
 }
