@@ -27,7 +27,7 @@
         android:layout_height="@dimen/track_image_size"
         android:scaleType="centerCrop"
         android:contentDescription="@string/track_cover"
-        android:background="@drawable/image_placeholder"
+        android:background="@drawable/placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

@@ -13,4 +13,5 @@
     <color name="search_icon">#1A1B22</color>
     <color name="tool_bar">#FFFFFFFF</color>
     <color name="dot_icon">#FFFFFFFF</color>
+    <color name="placeholder">#1A1B22</color>
 </resources>
