@@ -9,4 +9,41 @@
     <dimen name="DrawablePadding">8dp</dimen>
     <dimen name="PaddingVertical">20dp</dimen>
     <dimen name="PaddingHorizontal">16dp</dimen>
+
+    <!-- Поле поиска -->
+    <dimen name="search_margin_start">16dp</dimen>
+    <dimen name="search_margin_end">16dp</dimen>
+    <dimen name="search_margin_top">8dp</dimen>
+
+    <!-- Общие отступы -->
+    <dimen name="track_item_padding_start">13dp</dimen>
+    <dimen name="track_image_margin_start">13dp</dimen>
+    <dimen name="track_item_padding_end">12dp</dimen>
+    <dimen name="track_item_padding_top">8dp</dimen>
+    <dimen name="track_item_padding_bottom">8dp</dimen>
+
+    <!-- Размеры изображений -->
+    <dimen name="track_image_size">56dp</dimen>
+    <dimen name="arrow_icon_size">24dp</dimen>
+    <dimen name="dot_icon_size">4dp</dimen>
+
+    <!-- Отступы между элементами -->
+    <dimen name="track_name_margin_start">12dp</dimen>
+    <dimen name="track_name_margin_top">6dp</dimen>
+    <dimen name="track_name_margin_end">44dp</dimen>
+    <dimen name="info_container_margin_top">4dp</dimen>
+    <dimen name="info_container_margin_end">44dp</dimen>
+    <dimen name="dot_icon_margin_horizontal">4dp</dimen>
+
+    <!-- Размеры текста -->
+    <dimen name="track_name_text_size">16sp</dimen>
+    <dimen name="info_text_size">11sp</dimen>
+
+    <!-- Минимальная высота карточки -->
+    <dimen name="track_item_min_height">72dp</dimen>
+
+    <!-- Иконка стрелочки вправо -->
+    <dimen name="arrow_icon_padding_top">18dp</dimen>
+    <dimen name="arrow_icon_padding_bottom">19dp</dimen>
+    <dimen name="arrow_icon_padding_end">12dp</dimen>
 </resources>

@@ -22,7 +22,10 @@
         android:id="@+id/search_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_marginStart="@dimen/search_margin_start"
+        android:layout_marginEnd="@dimen/search_margin_end"
+        android:layout_marginTop="@dimen/search_margin_top"
+        android:layout_marginBottom="8dp"
         app:hintEnabled="false"
         style="@style/SearchBox"
         app:startIconDrawable="@drawable/search_light_mode"
@@ -32,10 +35,19 @@
         app:endIconMode="clear_text"
         app:endIconContentDescription="@string/clear_search">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/search_edit_text"
-        style="@style/SearchBoxText" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_edit_text"
+            style="@style/SearchBoxText" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/track_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="12dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
 </LinearLayout>

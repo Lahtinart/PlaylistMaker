@@ -6,10 +6,13 @@
         <item name="colorSurface">@color/yp_white</item>
         <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
         <item name="shapeAppearanceSmallComponent">@style/RoundedCorners</item>
+        <item name="colorPlaceholder">@color/placeholder</item>
     </style>
 
     <style name="RoundedCorners" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
+
+
 </resources>
