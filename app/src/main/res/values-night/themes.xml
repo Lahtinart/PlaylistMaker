@@ -2,6 +2,7 @@
     <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <item name="colorOnPrimary">@color/yp_white</item>
+        <item name="colorPlaceholder">@color/placeholder</item>
 
     </style>
 </resources>
