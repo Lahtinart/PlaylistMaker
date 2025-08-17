@@ -37,7 +37,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/search_edit_text"
-            style="@style/SearchBoxText" />
+            style="@style/SearchBoxText"
+            android:imeOptions="actionDone"
+            android:singleLine="true"/>
+
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,5 +52,6 @@
         android:paddingHorizontal="12dp"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
+
 
 </LinearLayout>
