@@ -41,7 +41,6 @@
             android:imeOptions="actionDone"
             android:singleLine="true"/>
 
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -53,5 +52,54 @@
         android:clipToPadding="false"
         android:scrollbars="vertical" />
 
+    <!-- Плейсхолдер "ничего не найдено" -->
+    <LinearLayout
+        android:id="@+id/placeholder_no_results"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/light_placeholder_no_results"
+            android:contentDescription="@string/no_results" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:text="@string/no_results"
+            android:textColor="@color/yp_black"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <!-- Плейсхолдер "нет сети" -->
+    <LinearLayout
+        android:id="@+id/placeholder_no_connection"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/light_placeholder_no_connection"
+            android:contentDescription="@string/no_connection" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/no_connection"
+            android:textColor="@color/yp_black"
+            android:textSize="16sp"/>
+    </LinearLayout>
 
 </LinearLayout>

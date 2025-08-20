@@ -6,9 +6,10 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -27,6 +28,8 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchEditText: TextInputEditText
     private lateinit var trackRecyclerView: RecyclerView
     private lateinit var trackAdapter: TrackAdapter
+    private lateinit var placeholderNoResults: LinearLayout
+    private lateinit var placeholderNoConnection: LinearLayout
 
     private var searchText: String = ""
 
@@ -54,6 +57,8 @@ class SearchActivity : AppCompatActivity() {
 
         searchEditText = findViewById(R.id.search_edit_text)
         trackRecyclerView = findViewById(R.id.track_recycler_view)
+        placeholderNoResults = findViewById(R.id.placeholder_no_results)
+        placeholderNoConnection = findViewById(R.id.placeholder_no_connection)
 
         trackAdapter = TrackAdapter(mutableListOf())
         trackRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -81,19 +86,47 @@ class SearchActivity : AppCompatActivity() {
 
     private fun performSearch(query: String) {
         if (query.isBlank()) return
+
         api.search(query).enqueue(object : Callback<SearchResponse> {
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                 if (response.isSuccessful && response.body() != null) {
-                    trackAdapter.updateTracks(response.body()!!.results)
+                    val results = response.body()!!.results
+                    if (results.isNotEmpty()) {
+                        trackAdapter.updateTracks(results)
+                        showRecycler()
+                    } else {
+                        showNoResultsPlaceholder()
+                    }
                 } else {
-                    Toast.makeText(this@SearchActivity, "Ошибка загрузки данных", Toast.LENGTH_SHORT).show()
+                    showNoResultsPlaceholder()
                 }
             }
 
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                 Toast.makeText(this@SearchActivity, "Ошибка сети: ${t.message}", Toast.LENGTH_SHORT).show()
+                showNoConnectionPlaceholder()
             }
         })
+    }
+
+    private fun showRecycler() {
+        trackRecyclerView.visibility = View.VISIBLE
+        placeholderNoResults.visibility = View.GONE
+        placeholderNoConnection.visibility = View.GONE
+    }
+
+    private fun showNoResultsPlaceholder() {
+        trackAdapter.updateTracks(emptyList())
+        trackRecyclerView.visibility = View.GONE
+        placeholderNoResults.visibility = View.VISIBLE
+        placeholderNoConnection.visibility = View.GONE
+    }
+
+    private fun showNoConnectionPlaceholder() {
+        trackAdapter.updateTracks(emptyList())
+        trackRecyclerView.visibility = View.GONE
+        placeholderNoResults.visibility = View.GONE
+        placeholderNoConnection.visibility = View.VISIBLE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -107,6 +140,4 @@ class SearchActivity : AppCompatActivity() {
         searchEditText.setText(restoredText)
         searchEditText.setSelection(restoredText?.length ?: 0)
     }
-
-
 }
