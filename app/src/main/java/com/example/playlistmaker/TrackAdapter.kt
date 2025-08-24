@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.playlistmaker.R
 import com.example.playlistmaker.Track
-import java.text.SimpleDateFormat
 import java.util.Locale
 
 class TrackAdapter(private val tracks: MutableList<Track>) :
@@ -19,8 +18,6 @@ class TrackAdapter(private val tracks: MutableList<Track>) :
         val duration: TextView = view.findViewById(R.id.track_time)
         val artwork: ImageView = view.findViewById(R.id.track_image)
     }
-
-    private val timeFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -34,7 +31,11 @@ class TrackAdapter(private val tracks: MutableList<Track>) :
         holder.name.text = track.trackName
         holder.artist.text = track.artistName
 
-        holder.duration.text = timeFormat.format(track.trackTimeMillis.toLong())
+        val totalMillis = track.trackTimeMillis.toLongOrNull() ?: 0L
+        val totalSeconds = totalMillis / 1000
+        val minutes = totalSeconds / 60
+        val seconds = totalSeconds % 60
+        holder.duration.text = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
 
         Glide.with(holder.artwork.context)
             .load(track.artworkUrl100)

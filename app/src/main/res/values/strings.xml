@@ -24,6 +24,7 @@
     <string name="search_icon">Иконка поиска</string>
     <string name="track_cover">Иконка трека</string>
     <string name="no_results">Ничего не нашлось</string>
-    <string name="no_connection">Проблемы со связью Загрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="no_connection"> Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="retry">Обновить</string>
 
 </resources>
