@@ -37,7 +37,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/search_edit_text"
-            style="@style/SearchBoxText" />
+            style="@style/SearchBoxText"
+            android:imeOptions="actionDone"
+            android:singleLine="true"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,5 +51,77 @@
         android:paddingHorizontal="12dp"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
+
+    <!-- Плейсхолдер "ничего не найдено" -->
+    <LinearLayout
+        android:id="@+id/placeholder_no_results"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="102dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/placeholder_no_results"
+            android:contentDescription="@string/no_results" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/no_results"
+            style="@style/TextNoResultNoSignal"/>
+
+    </LinearLayout>
+
+    <!-- Плейсхолдер "нет сети" -->
+    <LinearLayout
+        android:id="@+id/placeholder_no_connection"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="102dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/placeholder_no_connection"
+            android:contentDescription="@string/no_connection" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="@string/no_connection"
+            style="@style/TextNoResultNoSignal"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/retry"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/yp_black"
+            android:textColor="@color/yp_white"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp"
+            style="@style/RoundedButtonRetry"/>
+    </LinearLayout>
 
 </LinearLayout>
