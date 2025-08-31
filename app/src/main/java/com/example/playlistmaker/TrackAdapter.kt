@@ -1,3 +1,5 @@
+package com.example.playlistmaker
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -5,18 +7,51 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.playlistmaker.R
-import com.example.playlistmaker.Track
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.util.Locale
 
-class TrackAdapter(private val tracks: MutableList<Track>) :
-    RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
+class TrackAdapter(
+    private val tracks: MutableList<Track>,
+    private val onTrackClick: ((Track) -> Unit)? = null
+) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
 
     inner class TrackViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextView = view.findViewById(R.id.track_name)
-        val artist: TextView = view.findViewById(R.id.artist_name)
-        val duration: TextView = view.findViewById(R.id.track_time)
-        val artwork: ImageView = view.findViewById(R.id.track_image)
+        private val name: TextView = view.findViewById(R.id.track_name)
+        private val artist: TextView = view.findViewById(R.id.artist_name)
+        private val duration: TextView = view.findViewById(R.id.track_time)
+        private val artwork: ImageView = view.findViewById(R.id.track_image)
+
+        init {
+            view.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onTrackClick?.invoke(tracks[position])
+                }
+            }
+        }
+
+        fun bind(track: Track) {
+            name.text = track.trackName
+            artist.text = track.artistName
+
+            // Форматирование времени mm:ss
+            val totalMillis = track.trackTimeMillis.toLongOrNull() ?: 0L
+            val totalSeconds = totalMillis / 1000
+            val minutes = totalSeconds / 60
+            val seconds = totalSeconds % 60
+            duration.text = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
+
+            Glide.with(artwork.context)
+                .load(track.artworkUrl100)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .transform(RoundedCorners(dpToPx(2)))
+                .into(artwork)
+        }
+
+        private fun dpToPx(dp: Int): Int {
+            return (dp * itemView.context.resources.displayMetrics.density).toInt()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
@@ -26,22 +61,7 @@ class TrackAdapter(private val tracks: MutableList<Track>) :
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        val track = tracks[position]
-
-        holder.name.text = track.trackName
-        holder.artist.text = track.artistName
-
-        val totalMillis = track.trackTimeMillis.toLongOrNull() ?: 0L
-        val totalSeconds = totalMillis / 1000
-        val minutes = totalSeconds / 60
-        val seconds = totalSeconds % 60
-        holder.duration.text = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
-
-        Glide.with(holder.artwork.context)
-            .load(track.artworkUrl100)
-            .placeholder(R.drawable.placeholder)
-            .error(R.drawable.placeholder)
-            .into(holder.artwork)
+        holder.bind(tracks[position])
     }
 
     override fun getItemCount(): Int = tracks.size

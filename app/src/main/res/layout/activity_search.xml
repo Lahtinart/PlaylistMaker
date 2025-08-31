@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context=".SearchActivity">
 
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topSearchBar"
         android:layout_width="match_parent"
@@ -18,6 +19,7 @@
         app:titleCentered="false"
         app:titleTextColor="@color/yp_black" />
 
+    <!-- Поисковая строка -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_input_layout"
         android:layout_width="match_parent"
@@ -26,8 +28,8 @@
         android:layout_marginEnd="@dimen/search_margin_end"
         android:layout_marginTop="@dimen/search_margin_top"
         android:layout_marginBottom="8dp"
-        app:hintEnabled="false"
         style="@style/SearchBox"
+        app:hintEnabled="false"
         app:startIconDrawable="@drawable/search_light_mode"
         app:startIconContentDescription="@string/search_icon"
         app:startIconTint="@color/search_icon"
@@ -40,9 +42,23 @@
             style="@style/SearchBoxText"
             android:imeOptions="actionDone"
             android:singleLine="true"/>
-
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Заголовок истории -->
+    <TextView
+        android:id="@+id/history_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/history_title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/yp_black"
+        android:visibility="gone"/>
+
+    <!-- RecyclerView для треков -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/track_recycler_view"
         android:layout_width="match_parent"
@@ -52,7 +68,23 @@
         android:clipToPadding="false"
         android:scrollbars="vertical" />
 
-    <!-- Плейсхолдер "ничего не найдено" -->
+    <!-- Кнопка очистки истории -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_clear_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/clear_history"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/yp_black"
+        android:textColor="@color/yp_white"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:visibility="gone"/>
+
+    <!-- Плейсхолдеры -->
     <LinearLayout
         android:id="@+id/placeholder_no_results"
         android:layout_width="match_parent"
@@ -78,10 +110,8 @@
             android:layout_marginTop="16dp"
             android:text="@string/no_results"
             style="@style/TextNoResultNoSignal"/>
-
     </LinearLayout>
 
-    <!-- Плейсхолдер "нет сети" -->
     <LinearLayout
         android:id="@+id/placeholder_no_connection"
         android:layout_width="match_parent"
@@ -107,8 +137,7 @@
             android:gravity="center"
             android:layout_marginTop="16dp"
             android:text="@string/no_connection"
-            style="@style/TextNoResultNoSignal"
-            />
+            style="@style/TextNoResultNoSignal" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_retry"
