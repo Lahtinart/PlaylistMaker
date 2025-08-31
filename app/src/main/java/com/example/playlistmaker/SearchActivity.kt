@@ -29,7 +29,6 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var placeholderNoConnection: View
     private lateinit var btnRetry: MaterialButton
     private lateinit var historyCard: TextView
-    private lateinit var clearHistoryButton: MaterialButton
 
     private lateinit var viewModel: SearchViewModel
     private lateinit var searchHistory: SearchHistory
@@ -65,13 +64,21 @@ class SearchActivity : AppCompatActivity() {
         placeholderNoConnection = findViewById(R.id.placeholder_no_connection)
         btnRetry = findViewById(R.id.btn_retry)
         historyCard = findViewById(R.id.history_card)
-        clearHistoryButton = findViewById(R.id.btn_clear_history)
 
-        // Adapter
-        trackAdapter = TrackAdapter(mutableListOf()) { track ->
-            searchHistory.addTrack(track)
-            Toast.makeText(this, "Вы выбрали ${track.trackName}", Toast.LENGTH_SHORT).show()
-        }
+        // Adapter с футером для очистки истории
+        trackAdapter = TrackAdapter(
+            mutableListOf(),
+            onTrackClick = { track ->
+                searchHistory.addTrack(track)
+                Toast.makeText(this, "Вы выбрали ${track.trackName}", Toast.LENGTH_SHORT).show()
+            },
+            onClearHistoryClick = {
+                searchHistory.clearHistory()
+                trackAdapter.updateTracks(emptyList())
+                hideHistoryCard()
+            }
+        )
+
         trackRecyclerView.layoutManager = LinearLayoutManager(this)
         trackRecyclerView.adapter = trackAdapter
 
@@ -91,7 +98,7 @@ class SearchActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.searchText = s?.toString() ?: ""
                 if (viewModel.searchText.isBlank()) showHistory()
-                else hideHistory()
+                else hideHistoryCard()
             }
         })
 
@@ -110,20 +117,13 @@ class SearchActivity : AppCompatActivity() {
         // Retry
         btnRetry.setOnClickListener { performSearch() }
 
-        // Очистка поиска
+        // Очистка поиска через иконку
         searchInputLayout.setEndIconOnClickListener {
             searchEditText.text?.clear()
             hideKeyboard()
             trackAdapter.updateTracks(emptyList())
             hidePlaceholders()
-            hideHistory()
-        }
-
-        // Очистка истории
-        clearHistoryButton.setOnClickListener {
-            searchHistory.clearHistory()
-            trackAdapter.updateTracks(emptyList())
-            hideHistory()
+            hideHistoryCard()
         }
 
         // Показ истории при старте
@@ -149,14 +149,14 @@ class SearchActivity : AppCompatActivity() {
         trackAdapter.updateTracks(emptyList())
         trackRecyclerView.visibility = View.VISIBLE
         hidePlaceholders()
-        hideHistory()
+        hideHistoryCard()
     }
 
     private fun showTracks(tracks: List<Track>) {
         trackAdapter.updateTracks(tracks)
         trackRecyclerView.visibility = View.VISIBLE
         hidePlaceholders()
-        hideHistory()
+        hideHistoryCard()
     }
 
     private fun showNoResultsPlaceholder() {
@@ -164,7 +164,7 @@ class SearchActivity : AppCompatActivity() {
         placeholderNoResults.visibility = View.VISIBLE
         trackRecyclerView.visibility = RecyclerView.GONE
         placeholderNoConnection.visibility = View.GONE
-        hideHistory()
+        hideHistoryCard()
     }
 
     private fun showNoConnectionPlaceholder() {
@@ -172,7 +172,7 @@ class SearchActivity : AppCompatActivity() {
         placeholderNoConnection.visibility = View.VISIBLE
         trackRecyclerView.visibility = RecyclerView.GONE
         placeholderNoResults.visibility = View.GONE
-        hideHistory()
+        hideHistoryCard()
     }
 
     private fun hidePlaceholders() {
@@ -186,12 +186,12 @@ class SearchActivity : AppCompatActivity() {
             trackAdapter.updateTracks(history)
             trackRecyclerView.visibility = View.VISIBLE
             historyCard.visibility = View.VISIBLE
-            clearHistoryButton.visibility = View.VISIBLE
+        } else {
+            hideHistoryCard()
         }
     }
 
-    private fun hideHistory() {
+    private fun hideHistoryCard() {
         historyCard.visibility = View.GONE
-        clearHistoryButton.visibility = View.GONE
     }
 }

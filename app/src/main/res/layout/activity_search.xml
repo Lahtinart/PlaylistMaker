@@ -53,9 +53,7 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/history_title"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/yp_black"
+        style="@style/HistoryTitle"
         android:visibility="gone"/>
 
     <!-- RecyclerView для треков -->
@@ -67,22 +65,6 @@
         android:paddingHorizontal="12dp"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
-
-    <!-- Кнопка очистки истории -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_clear_history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/clear_history"
-        android:textAllCaps="false"
-        android:backgroundTint="@color/yp_black"
-        android:textColor="@color/yp_white"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
-        android:visibility="gone"/>
 
     <!-- Плейсхолдеры -->
     <LinearLayout
