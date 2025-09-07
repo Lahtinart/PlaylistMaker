@@ -50,21 +50,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/history_title"
         style="@style/HistoryTitle"
         android:visibility="gone"/>
 
     <!-- RecyclerView для треков -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/track_recycler_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingHorizontal="12dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/track_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:maxHeight="500dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical" />
+
+        <FrameLayout
+            android:id="@+id/clear_history_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <!-- Плейсхолдеры -->
     <LinearLayout

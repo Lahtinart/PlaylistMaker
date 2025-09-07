@@ -46,4 +46,6 @@
     <dimen name="arrow_icon_padding_top">18dp</dimen>
     <dimen name="arrow_icon_padding_bottom">19dp</dimen>
     <dimen name="arrow_icon_padding_end">12dp</dimen>
+
+    <dimen name="clear_button_height">56dp</dimen>
 </resources>
