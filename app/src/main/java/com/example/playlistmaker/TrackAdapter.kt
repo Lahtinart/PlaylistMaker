@@ -17,8 +17,7 @@ class TrackAdapter(
 
     inner class TrackViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val name: TextView = view.findViewById(R.id.track_name)
-        private val artist: TextView = view.findViewById(R.id.artist_name)
-        private val duration: TextView = view.findViewById(R.id.track_time)
+        private val artistAndTime: TextView = view.findViewById(R.id.artist_and_time)
         private val artwork: ImageView = view.findViewById(R.id.track_image)
 
         init {
@@ -32,13 +31,14 @@ class TrackAdapter(
 
         fun bind(track: Track) {
             name.text = track.trackName ?: "Без названия"
-            artist.text = track.artistName ?: "Неизвестный артист"
 
             val totalMillis = track.trackTimeMillis?.toLongOrNull() ?: 0L
             val totalSeconds = totalMillis / 1000
             val minutes = totalSeconds / 60
             val seconds = totalSeconds % 60
-            duration.text = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
+            val formattedTime = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
+
+            artistAndTime.text = "${track.artistName ?: "Неизвестный артист"} • $formattedTime"
 
             Glide.with(artwork.context)
                 .load(track.artworkUrl100 ?: "")
