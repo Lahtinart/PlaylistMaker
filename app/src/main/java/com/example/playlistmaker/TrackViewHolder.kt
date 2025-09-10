@@ -11,8 +11,18 @@ import java.util.Locale
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val trackName: TextView = itemView.findViewById(R.id.track_name)
+    private val artistName: TextView = itemView.findViewById(R.id.artist_name)
+    private val trackTime: TextView = itemView.findViewById(R.id.track_time)
     private val trackImage: ImageView = itemView.findViewById(R.id.track_image)
-    private val artistAndTime: TextView = itemView.findViewById(R.id.artist_and_time)
+
+    init {
+        itemView.setOnClickListener {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                (itemView.tag as? TrackAdapter.OnTrackClickListener)?.onTrackClick(position)
+            }
+        }
+    }
 
     fun bind(track: Track) {
         // Название трека
@@ -24,11 +34,12 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val seconds = totalMillis / 1000 % 60
         val formattedTime = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
 
-        // Артист + время
-        artistAndTime.text = "${track.artistName ?: "Неизвестный артист"} • $formattedTime"
+        // Артист и время
+        artistName.text = track.artistName ?: "Неизвестный артист"
+        trackTime.text = "• $formattedTime"
 
-        // Обложка
-        Glide.with(itemView)
+        // Обложка трека
+        Glide.with(trackImage.context)
             .load(track.artworkUrl100 ?: "")
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)

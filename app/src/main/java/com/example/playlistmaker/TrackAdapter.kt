@@ -3,53 +3,15 @@ package com.example.playlistmaker
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import java.util.Locale
 
 class TrackAdapter(
     private val tracks: MutableList<Track>,
-    private val onTrackClick: ((Track) -> Unit)? = null,
-) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
+    private val onTrackClick: ((Track) -> Unit)? = null
+) : RecyclerView.Adapter<TrackViewHolder>() {
 
-    inner class TrackViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val name: TextView = view.findViewById(R.id.track_name)
-        private val artistAndTime: TextView = view.findViewById(R.id.artist_and_time)
-        private val artwork: ImageView = view.findViewById(R.id.track_image)
-
-        init {
-            view.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION && position < tracks.size) {
-                    onTrackClick?.invoke(tracks[position])
-                }
-            }
-        }
-
-        fun bind(track: Track) {
-            name.text = track.trackName ?: "Без названия"
-
-            val totalMillis = track.trackTimeMillis?.toLongOrNull() ?: 0L
-            val totalSeconds = totalMillis / 1000
-            val minutes = totalSeconds / 60
-            val seconds = totalSeconds % 60
-            val formattedTime = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
-
-            artistAndTime.text = "${track.artistName ?: "Неизвестный артист"} • $formattedTime"
-
-            Glide.with(artwork.context)
-                .load(track.artworkUrl100 ?: "")
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
-                .transform(RoundedCorners(dpToPx(2)))
-                .into(artwork)
-        }
-
-        private fun dpToPx(dp: Int): Int =
-            (dp * itemView.context.resources.displayMetrics.density).toInt()
+    interface OnTrackClickListener {
+        fun onTrackClick(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
@@ -60,6 +22,14 @@ class TrackAdapter(
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         holder.bind(tracks[position])
+        // Привязываем к тегу для обработки клика
+        holder.itemView.tag = object : TrackAdapter.OnTrackClickListener {
+            override fun onTrackClick(positionTag: Int) {
+                if (positionTag in tracks.indices) {
+                    onTrackClick?.invoke(tracks[positionTag])
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int = tracks.size
