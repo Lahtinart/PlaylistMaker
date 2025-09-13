@@ -1,22 +1,17 @@
+package com.example.playlistmaker
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.playlistmaker.R
-import com.example.playlistmaker.Track
-import java.util.Locale
 
-class TrackAdapter(private val tracks: MutableList<Track>) :
-    RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
+class TrackAdapter(
+    private val tracks: MutableList<Track>,
+    private val onTrackClick: ((Track) -> Unit)? = null
+) : RecyclerView.Adapter<TrackViewHolder>() {
 
-    inner class TrackViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextView = view.findViewById(R.id.track_name)
-        val artist: TextView = view.findViewById(R.id.artist_name)
-        val duration: TextView = view.findViewById(R.id.track_time)
-        val artwork: ImageView = view.findViewById(R.id.track_image)
+    interface OnTrackClickListener {
+        fun onTrackClick(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
@@ -26,22 +21,15 @@ class TrackAdapter(private val tracks: MutableList<Track>) :
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        val track = tracks[position]
-
-        holder.name.text = track.trackName
-        holder.artist.text = track.artistName
-
-        val totalMillis = track.trackTimeMillis.toLongOrNull() ?: 0L
-        val totalSeconds = totalMillis / 1000
-        val minutes = totalSeconds / 60
-        val seconds = totalSeconds % 60
-        holder.duration.text = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
-
-        Glide.with(holder.artwork.context)
-            .load(track.artworkUrl100)
-            .placeholder(R.drawable.placeholder)
-            .error(R.drawable.placeholder)
-            .into(holder.artwork)
+        holder.bind(tracks[position])
+        // Привязываем к тегу для обработки клика
+        holder.itemView.tag = object : TrackAdapter.OnTrackClickListener {
+            override fun onTrackClick(positionTag: Int) {
+                if (positionTag in tracks.indices) {
+                    onTrackClick?.invoke(tracks[positionTag])
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int = tracks.size

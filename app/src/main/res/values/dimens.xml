@@ -33,7 +33,7 @@
     <dimen name="track_name_margin_end">44dp</dimen>
     <dimen name="info_container_margin_top">4dp</dimen>
     <dimen name="info_container_margin_end">44dp</dimen>
-    <dimen name="dot_icon_margin_horizontal">4dp</dimen>
+    <dimen name="dot_icon_margin_horizontal">2dp</dimen>
 
     <!-- Размеры текста -->
     <dimen name="track_name_text_size">16sp</dimen>
@@ -46,4 +46,6 @@
     <dimen name="arrow_icon_padding_top">18dp</dimen>
     <dimen name="arrow_icon_padding_bottom">19dp</dimen>
     <dimen name="arrow_icon_padding_end">12dp</dimen>
+
+    <dimen name="clear_button_height">56dp</dimen>
 </resources>

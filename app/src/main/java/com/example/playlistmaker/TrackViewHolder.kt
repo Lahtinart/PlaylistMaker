@@ -1,36 +1,52 @@
 package com.example.playlistmaker
 
-import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import java.util.Locale
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
     private val trackName: TextView = itemView.findViewById(R.id.track_name)
     private val artistName: TextView = itemView.findViewById(R.id.artist_name)
     private val trackTime: TextView = itemView.findViewById(R.id.track_time)
     private val trackImage: ImageView = itemView.findViewById(R.id.track_image)
 
-    fun bind(track: Track) {
-        trackName.text = track.trackName
-        artistName.text = track.artistName
-        trackTime.text = track.trackTimeMillis
+    init {
+        itemView.setOnClickListener {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                (itemView.tag as? TrackAdapter.OnTrackClickListener)?.onTrackClick(position)
+            }
+        }
+    }
 
-        Glide.with(itemView)
-            .load(track.artworkUrl100)
+    fun bind(track: Track) {
+        // Название трека
+        trackName.text = track.trackName ?: "Без названия"
+
+        // Форматируем время
+        val totalMillis = track.trackTimeMillis?.toLongOrNull() ?: 0L
+        val minutes = totalMillis / 1000 / 60
+        val seconds = totalMillis / 1000 % 60
+        val formattedTime = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
+
+        // Артист и время
+        artistName.text = track.artistName ?: "Неизвестный артист"
+        trackTime.text = "• $formattedTime"
+
+        // Обложка трека
+        Glide.with(trackImage.context)
+            .load(track.artworkUrl100 ?: "")
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .transform(RoundedCorners(dpToPx(2)))
             .into(trackImage)
     }
-    private fun dpToPx(dp: Int): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp.toFloat(),
-            itemView.context.resources.displayMetrics
-        ).toInt()
-    }
+
+    private fun dpToPx(dp: Int): Int =
+        (dp * itemView.context.resources.displayMetrics.density).toInt()
 }

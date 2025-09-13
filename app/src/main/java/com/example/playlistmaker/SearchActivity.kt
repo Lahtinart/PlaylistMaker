@@ -1,14 +1,14 @@
 package com.example.playlistmaker
 
-import TrackAdapter
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.LinearLayout
+import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,10 +16,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchActivity : AppCompatActivity() {
 
@@ -27,69 +26,89 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchInputLayout: TextInputLayout
     private lateinit var trackRecyclerView: RecyclerView
     private lateinit var trackAdapter: TrackAdapter
-    private lateinit var placeholderNoResults: LinearLayout
-    private lateinit var placeholderNoConnection: LinearLayout
-    private lateinit var retryButton: Button
+    private lateinit var placeholderNoResults: View
+    private lateinit var placeholderNoConnection: View
+    private lateinit var btnRetry: MaterialButton
+    private lateinit var historyCard: TextView
+    private lateinit var btnClearHistory: MaterialButton
 
     private lateinit var viewModel: SearchViewModel
+    private lateinit var searchHistory: SearchHistory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        // Toolbar
         val toolbar: Toolbar = findViewById(R.id.topSearchBar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
+        // SharedPreferences
+        val prefs = getSharedPreferences("playlist_prefs", Context.MODE_PRIVATE)
+        searchHistory = SearchHistory(prefs)
+
+        // ViewModel
         val api = NetworkClient.api
-
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return SearchViewModel(api) as T
             }
         })[SearchViewModel::class.java]
 
+        // Views
         searchEditText = findViewById(R.id.search_edit_text)
         searchInputLayout = findViewById(R.id.search_input_layout)
         trackRecyclerView = findViewById(R.id.track_recycler_view)
         placeholderNoResults = findViewById(R.id.placeholder_no_results)
         placeholderNoConnection = findViewById(R.id.placeholder_no_connection)
-        retryButton = findViewById(R.id.btn_retry)
+        btnRetry = findViewById(R.id.btn_retry)
+        historyCard = findViewById(R.id.history_card)
 
-        trackAdapter = TrackAdapter(mutableListOf())
+        // Контейнер для кнопки очистки истории
+        val clearHistoryContainer: FrameLayout = findViewById(R.id.clear_history_container)
+        val clearHistoryView = layoutInflater.inflate(R.layout.item_clear_history, clearHistoryContainer, false)
+        clearHistoryContainer.addView(clearHistoryView)
+        btnClearHistory = clearHistoryView.findViewById(R.id.btn_clear_history_item)
+
+        // Adapter
+        trackAdapter = TrackAdapter(
+            mutableListOf(),
+            onTrackClick = { track ->
+                searchHistory.addTrack(track)
+                Toast.makeText(this, "Вы выбрали ${track.trackName}", Toast.LENGTH_SHORT).show()
+            }
+        )
+
         trackRecyclerView.layoutManager = LinearLayoutManager(this)
         trackRecyclerView.adapter = trackAdapter
 
-        // Обновление списка по LiveData
+        // LiveData
         viewModel.tracks.observe(this) { tracks ->
-            if (tracks.isNotEmpty()) {
-                trackAdapter.updateTracks(tracks)
-                showRecycler()
-            } else {
-                showNoResultsPlaceholder()
-            }
+            if (tracks.isNotEmpty()) showTracks(tracks)
+            else showNoResultsPlaceholder()
         }
-
         viewModel.error.observe(this) { isError ->
-            if (isError) {
-                showNoConnectionPlaceholder()
-            }
+            if (isError) showNoConnectionPlaceholder()
         }
 
-        // Слушатель текста
+        // TextWatcher
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 viewModel.searchText = s?.toString() ?: ""
+                if (viewModel.searchText.isBlank()) showHistory()
+                else hideHistoryCard()
             }
         })
 
-        // Поиск по кнопке DONE
+        searchEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && viewModel.searchText.isBlank()) showHistory()
+        }
+
         searchEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 performSearch()
@@ -98,23 +117,30 @@ class SearchActivity : AppCompatActivity() {
             } else false
         }
 
-        retryButton.setOnClickListener { performSearch() }
+        // Retry
+        btnRetry.setOnClickListener { performSearch() }
 
-        // Восстановление текста
-        searchEditText.setText(viewModel.searchText)
-        searchEditText.setSelection(viewModel.searchText.length)
-
-        // 🔑 Обработка крестика (очистка поля)
+        // Очистка поиска
         searchInputLayout.setEndIconOnClickListener {
             searchEditText.text?.clear()
             hideKeyboard()
-
-            // Скрыть список и плейсхолдеры
             trackAdapter.updateTracks(emptyList())
-            trackRecyclerView.visibility = RecyclerView.GONE
-            placeholderNoResults.visibility = LinearLayout.GONE
-            placeholderNoConnection.visibility = LinearLayout.GONE
+            hidePlaceholders()
+            hideHistoryCard()
         }
+
+        // Очистка истории
+        btnClearHistory.setOnClickListener {
+            searchHistory.clearHistory()
+            trackAdapter.updateTracks(emptyList())
+            hideHistoryCard()
+        }
+
+        // Show history on start
+        if (viewModel.searchText.isBlank()) showHistory()
+
+        // Сделаем кнопку плавающей
+        setupFloatingClearButton()
     }
 
     private fun performSearch() {
@@ -134,28 +160,83 @@ class SearchActivity : AppCompatActivity() {
 
     private fun showLoading() {
         trackAdapter.updateTracks(emptyList())
-        trackRecyclerView.visibility = RecyclerView.VISIBLE
-        placeholderNoResults.visibility = LinearLayout.GONE
-        placeholderNoConnection.visibility = LinearLayout.GONE
+        trackRecyclerView.visibility = View.VISIBLE
+        hidePlaceholders()
+        hideHistoryCard()
     }
 
-    private fun showRecycler() {
-        trackRecyclerView.visibility = RecyclerView.VISIBLE
-        placeholderNoResults.visibility = LinearLayout.GONE
-        placeholderNoConnection.visibility = LinearLayout.GONE
+    private fun showTracks(tracks: List<Track>) {
+        trackAdapter.updateTracks(tracks)
+        trackRecyclerView.visibility = View.VISIBLE
+        hidePlaceholders()
+        hideHistoryCard()
     }
 
     private fun showNoResultsPlaceholder() {
         trackAdapter.updateTracks(emptyList())
+        placeholderNoResults.visibility = View.VISIBLE
         trackRecyclerView.visibility = RecyclerView.GONE
-        placeholderNoResults.visibility = LinearLayout.VISIBLE
-        placeholderNoConnection.visibility = LinearLayout.GONE
+        placeholderNoConnection.visibility = View.GONE
+        hideHistoryCard()
     }
 
     private fun showNoConnectionPlaceholder() {
         trackAdapter.updateTracks(emptyList())
+        placeholderNoConnection.visibility = View.VISIBLE
         trackRecyclerView.visibility = RecyclerView.GONE
-        placeholderNoResults.visibility = LinearLayout.GONE
-        placeholderNoConnection.visibility = LinearLayout.VISIBLE
+        placeholderNoResults.visibility = View.GONE
+        hideHistoryCard()
+    }
+
+    private fun hidePlaceholders() {
+        placeholderNoResults.visibility = View.GONE
+        placeholderNoConnection.visibility = View.GONE
+    }
+
+    private fun showHistory() {
+        val history = searchHistory.getHistory()
+        if (history.isNotEmpty()) {
+            trackAdapter.updateTracks(history)
+            trackRecyclerView.visibility = View.VISIBLE
+            historyCard.visibility = View.VISIBLE
+            btnClearHistory.visibility = View.VISIBLE
+        } else {
+            hideHistoryCard()
+        }
+    }
+
+    private fun hideHistoryCard() {
+        historyCard.visibility = View.GONE
+        btnClearHistory.visibility = View.GONE
+    }
+
+    /** Плавающая кнопка очистки истории */
+    private fun setupFloatingClearButton() {
+        val layoutManager = trackRecyclerView.layoutManager as LinearLayoutManager
+
+        trackRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (btnClearHistory.visibility != View.VISIBLE) return
+
+                val totalItems = layoutManager.itemCount
+                if (totalItems == 0) return
+
+                val lastVisibleView = layoutManager.findViewByPosition(totalItems - 1)
+                val recyclerHeight = trackRecyclerView.height
+
+                if (lastVisibleView != null) {
+                    val bottomOfLastItem = lastVisibleView.bottom
+                    val offset = bottomOfLastItem - recyclerHeight
+
+                    if (bottomOfLastItem + btnClearHistory.height + 24 <= recyclerHeight) {
+                        // Список короткий — кнопка сразу под последним элементом
+                        btnClearHistory.translationY = bottomOfLastItem.toFloat()
+                    } else {
+                        // Список длинный — кнопка прилипает к низу экрана
+                        btnClearHistory.translationY = 0f
+                    }
+                }
+            }
+        })
     }
 }
