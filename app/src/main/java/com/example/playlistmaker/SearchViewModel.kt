@@ -30,13 +30,24 @@ class SearchViewModel(private val api: ITunesApi) : ViewModel() {
         api.searchTracks(query).enqueue(object : Callback<SearchResponse> {
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                 _loading.value = false
-                if (response.isSuccessful && response.body() != null) {
-                    _tracks.value = response.body()!!.results
-                    _error.value = false
-                } else {
-                    _tracks.value = emptyList()
-                    _error.value = true
-                }
+
+                val results = response.body()?.results?.map { apiTrack ->
+                    Track(
+                        trackId = apiTrack.trackId ?: "0",  // если API вернул null
+                        trackName = apiTrack.trackName ?: "Unknown",
+                        artistName = apiTrack.artistName ?: "Unknown",
+                        trackTimeMillis = apiTrack.trackTimeMillis ?: "0",
+                        artworkUrl100 = apiTrack.artworkUrl100 ?: "",
+                        collectionName = apiTrack.collectionName,
+                        releaseDate = apiTrack.releaseDate,
+                        primaryGenreName = apiTrack.primaryGenreName,
+                        country = apiTrack.country
+                    )
+                } ?: emptyList()
+                _tracks.value = results
+
+                _tracks.value = results
+                _error.value = !response.isSuccessful
             }
 
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {

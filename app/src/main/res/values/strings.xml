@@ -28,5 +28,10 @@
     <string name="retry">Обновить</string>
     <string name="history_title">Вы искали</string>
     <string name="clear_history">Очистить историю</string>
+    <string name="track_time">Длительность</string>
+    <string name="album">Альбом</string>
+    <string name="year">Год</string>
+    <string name="music_style">Жанр</string>
+    <string name="land">Страна</string>
 
 </resources>

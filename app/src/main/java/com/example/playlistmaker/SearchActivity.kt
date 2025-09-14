@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -77,8 +78,13 @@ class SearchActivity : AppCompatActivity() {
         trackAdapter = TrackAdapter(
             mutableListOf(),
             onTrackClick = { track ->
+                // Сохраняем трек в историю
                 searchHistory.addTrack(track)
-                Toast.makeText(this, "Вы выбрали ${track.trackName}", Toast.LENGTH_SHORT).show()
+
+                // Переход на экран плеера
+                val intent = Intent(this, AudioPlayerActivity::class.java)
+                intent.putExtra("track", track) // Track должен быть Parcelable
+                startActivity(intent)
             }
         )
 
