@@ -1,31 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/controlButtons"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:paddingTop="16dp">
+    android:padding="16dp">
 
+    <!-- Левая кнопка -->
+    <!-- иконка левой кнопки -->
     <ImageButton
         android:id="@+id/playlistButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/dot_icon" />
+        android:src="@drawable/player_add_track_small"
+        app:layout_constraintEnd_toStartOf="@+id/playButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="58dp"/>
 
+    <!-- Центральная большая кнопка Play -->
+    <!-- круглая кнопка -->
     <ImageButton
         android:id="@+id/playButton"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_play" />
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:background="@drawable/ic_play"
+        android:src="@drawable/ic_play"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Правая кнопка -->
+    <!-- иконка правой кнопки -->
     <ImageButton
         android:id="@+id/favoriteButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_favorite" />
+        android:src="@drawable/ic_favorite"
+        app:layout_constraintStart_toEndOf="@+id/playButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="58dp"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
