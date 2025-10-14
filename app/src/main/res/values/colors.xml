@@ -22,6 +22,7 @@
     <color name="tool_bar">#FFFFFFFF</color>
     <color name="dot_icon">#AEAFB4</color>
     <color name="placeholder">#FFFFFFFF</color>
+    <color name="player_background">#FFFFFFFF</color>
 
 </resources>
 

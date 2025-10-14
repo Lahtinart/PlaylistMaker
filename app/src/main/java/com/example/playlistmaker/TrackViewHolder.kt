@@ -15,30 +15,15 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val trackTime: TextView = itemView.findViewById(R.id.track_time)
     private val trackImage: ImageView = itemView.findViewById(R.id.track_image)
 
-    init {
-        itemView.setOnClickListener {
-            val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                (itemView.tag as? TrackAdapter.OnTrackClickListener)?.onTrackClick(position)
-            }
-        }
-    }
-
     fun bind(track: Track) {
-        // Название трека
-        trackName.text = track.trackName ?: "Без названия"
+        trackName.text = track.trackName ?: "Unknown"
+        artistName.text = track.artistName ?: "Unknown"
 
-        // Форматируем время
-        val totalMillis = track.trackTimeMillis?.toLongOrNull() ?: 0L
+        val totalMillis = track.trackTimeMillis.toLongOrNull() ?: 0L
         val minutes = totalMillis / 1000 / 60
         val seconds = totalMillis / 1000 % 60
-        val formattedTime = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
+        trackTime.text = String.format(Locale.getDefault(), "• %d:%02d", minutes, seconds)
 
-        // Артист и время
-        artistName.text = track.artistName ?: "Неизвестный артист"
-        trackTime.text = "• $formattedTime"
-
-        // Обложка трека
         Glide.with(trackImage.context)
             .load(track.artworkUrl100 ?: "")
             .placeholder(R.drawable.placeholder)
