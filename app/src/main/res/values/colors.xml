@@ -23,6 +23,7 @@
     <color name="dot_icon">#AEAFB4</color>
     <color name="placeholder">#FFFFFFFF</color>
     <color name="player_background">#FFFFFFFF</color>
+    <color name="progressBar">#3772E7</color>
 
 </resources>
 
