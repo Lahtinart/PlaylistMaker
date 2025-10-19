@@ -132,7 +132,7 @@ class SearchActivity : AppCompatActivity() {
                     progressBar.visibility = View.GONE
                 } else {
                     hideHistoryCard()
-                    progressBar.visibility = View.VISIBLE 
+                    progressBar.visibility = View.VISIBLE
                     handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
                 }
             }
