@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.data.network
 
 import ITunesApi
 import retrofit2.Retrofit

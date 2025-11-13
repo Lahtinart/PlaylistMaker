@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MediaLibraryActivity"
+    tools:context="com.example.playlistmaker.ui.media.MediaLibraryActivity"
     android:background="@color/yp_blue">
 
     <TextView

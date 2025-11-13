@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/yp_white"
     android:orientation="vertical"
-    tools:context=".SearchActivity">
+    tools:context="com.example.playlistmaker.ui.search.SearchActivity">
 
     <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar

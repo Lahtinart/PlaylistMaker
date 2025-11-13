@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.data.dto
 
 // Класс для Retrofit, чтобы корректно принимать JSON с API
 data class SearchResponse(

@@ -1,34 +1,30 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.player
 
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.example.playlistmaker.domain.interactor.PlayerInteractor
+import com.example.playlistmaker.domain.interactor.PlayerViewModelFactory
+import com.example.playlistmaker.domain.model.Track
+import com.example.playlistmaker.presentation.player1.PlayerViewModel
+import com.example.playlistmaker.R
 
 class AudioPlayerActivity : AppCompatActivity() {
 
-    private var mediaPlayer: MediaPlayer? = null
-    private val handler = Handler(Looper.getMainLooper())
-
-    private companion object {
-        private const val STATE_DEFAULT = 0
-        private const val STATE_PREPARED = 1
-        private const val STATE_PLAYING = 2
-        private const val STATE_PAUSED = 3
-        private const val STATE_PREPARING = 4
-    }
-
-    private var playerState = STATE_DEFAULT
-
     private lateinit var playButton: ImageButton
     private lateinit var playbackProgress: TextView
+
+    private val playerInteractor = PlayerInteractor()
+    private val playerViewModel: PlayerViewModel by viewModels {
+        PlayerViewModelFactory(playerInteractor)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +51,7 @@ class AudioPlayerActivity : AppCompatActivity() {
             return
         }
 
-        // Заполнение UI
+        // UI
         trackName.text = track.trackName
         artistName.text = track.artistName
         if (track.collectionName.isNullOrEmpty()) albumName.visibility = View.GONE else albumName.apply {
@@ -82,7 +78,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         playbackProgress.text = "00:00"
 
         backButton.setOnClickListener {
-            stopPlayback()
+            playerViewModel.stop()
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -92,11 +88,7 @@ class AudioPlayerActivity : AppCompatActivity() {
                 Toast.makeText(this, "Preview not available", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            when (playerState) {
-                STATE_PLAYING -> pausePlayback()
-                STATE_DEFAULT, STATE_PREPARED, STATE_PAUSED -> startPlayback(url)
-                STATE_PREPARING -> {} // игнорируем клик
-            }
+            playerViewModel.play(track)
         }
 
         favoriteButton.setOnClickListener {
@@ -106,82 +98,29 @@ class AudioPlayerActivity : AppCompatActivity() {
         playlistButton.setOnClickListener {
             Toast.makeText(this, "Add to playlist clicked", Toast.LENGTH_SHORT).show()
         }
+
+        observePlayer()
     }
 
-    private fun startPlayback(url: String) {
-        if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer()
-            try {
-                mediaPlayer?.setDataSource(url)
-                mediaPlayer?.prepareAsync()
-                playerState = STATE_PREPARING
-                playButton.isEnabled = false
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this, "Cannot play track", Toast.LENGTH_SHORT).show()
-                return
-            }
+    private fun observePlayer() {
+        playerViewModel.isPlaying.observe(this, Observer { isPlaying ->
+            playButton.setImageResource(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
+        })
 
-            mediaPlayer?.setOnPreparedListener {
-                playerState = STATE_PREPARED
-                playButton.isEnabled = true
-                startMedia()
-            }
-
-            mediaPlayer?.setOnCompletionListener {
-                playerState = STATE_PREPARED
-                playButton.setImageResource(R.drawable.ic_play)
-                playbackProgress.text = "00:00"
-            }
-        } else {
-            startMedia()
-        }
-    }
-
-    private fun startMedia() {
-        mediaPlayer?.let {
-            if (!it.isPlaying) it.start()
-            playButton.setImageResource(R.drawable.ic_pause) // переключаем на паузу
-            playerState = STATE_PLAYING
-            updateProgress()
-        }
-    }
-
-    private fun pausePlayback() {
-        mediaPlayer?.pause()
-        playButton.setImageResource(R.drawable.ic_play) // переключаем на плей
-        playerState = STATE_PAUSED
-    }
-
-    private fun stopPlayback() {
-        mediaPlayer?.stop()
-        mediaPlayer?.release()
-        mediaPlayer = null
-        handler.removeCallbacksAndMessages(null)
-        playerState = STATE_DEFAULT
-    }
-
-    private fun updateProgress() {
-        mediaPlayer?.let {
-            val minutes = it.currentPosition / 1000 / 60
-            val seconds = it.currentPosition / 1000 % 60
+        playerViewModel.progress.observe(this, Observer { progress ->
+            val minutes = progress / 1000 / 60
+            val seconds = progress / 1000 % 60
             playbackProgress.text = String.format("%02d:%02d", minutes, seconds)
-
-            if (playerState == STATE_PLAYING) {
-                handler.postDelayed({ updateProgress() }, 500)
-            }
-        }
+        })
     }
 
     override fun onPause() {
         super.onPause()
-        if (playerState == STATE_PLAYING) {
-            pausePlayback()
-        }
+        playerViewModel.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        stopPlayback()
+        playerViewModel.stop()
     }
 }
