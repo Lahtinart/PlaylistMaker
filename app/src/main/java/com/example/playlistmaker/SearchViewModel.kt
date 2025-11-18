@@ -33,7 +33,7 @@ class SearchViewModel(private val api: ITunesApi) : ViewModel() {
 
                 val results = response.body()?.results?.map { apiTrack ->
                     Track(
-                        trackId = apiTrack.trackId ?: "0",  // если API вернул null
+                        trackId = apiTrack.trackId ?: "0",
                         trackName = apiTrack.trackName ?: "Unknown",
                         artistName = apiTrack.artistName ?: "Unknown",
                         trackTimeMillis = apiTrack.trackTimeMillis ?: "0",
@@ -41,7 +41,8 @@ class SearchViewModel(private val api: ITunesApi) : ViewModel() {
                         collectionName = apiTrack.collectionName,
                         releaseDate = apiTrack.releaseDate,
                         primaryGenreName = apiTrack.primaryGenreName,
-                        country = apiTrack.country
+                        country = apiTrack.country,
+                        previewUrl = apiTrack.previewUrl // теперь previewUrl будет заполнен
                     )
                 } ?: emptyList()
                 _tracks.value = results

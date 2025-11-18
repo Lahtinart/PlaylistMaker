@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -55,94 +54,107 @@
         style="@style/HistoryTitle"
         android:visibility="gone"/>
 
-    <!-- RecyclerView для треков -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/track_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:maxHeight="500dp"
-            android:clipToPadding="false"
-            android:scrollbars="vertical" />
-
-        <FrameLayout
-            android:id="@+id/clear_history_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <!-- Плейсхолдеры -->
-    <LinearLayout
-        android:id="@+id/placeholder_no_results"
+    <!-- Контейнер контента, плейсхолдеров и прогрессбара -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="top|center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_weight="1">
 
-        <Space
+        <!-- Основной контент -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="102dp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/placeholder_no_results"
-            android:contentDescription="@string/no_results" />
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/no_results"
-            style="@style/TextNoResultNoSignal"/>
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/track_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:maxHeight="500dp"
+                android:clipToPadding="false"
+                android:scrollbars="vertical" />
 
-    <LinearLayout
-        android:id="@+id/placeholder_no_connection"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="top|center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone">
+            <FrameLayout
+                android:id="@+id/clear_history_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
-        <Space
+        <!-- Плейсхолдер: нет результатов -->
+        <LinearLayout
+            android:id="@+id/placeholder_no_results"
             android:layout_width="match_parent"
-            android:layout_height="102dp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/placeholder_no_connection"
-            android:contentDescription="@string/no_connection" />
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="102dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="16dp"
-            android:text="@string/no_connection"
-            style="@style/TextNoResultNoSignal" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/placeholder_no_results"
+                android:contentDescription="@string/no_results" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_retry"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/no_results"
+                style="@style/TextNoResultNoSignal"/>
+        </LinearLayout>
+
+        <!-- Плейсхолдер: нет соединения -->
+        <LinearLayout
+            android:id="@+id/placeholder_no_connection"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/retry"
-            android:textAllCaps="false"
-            android:backgroundTint="@color/yp_black"
-            android:textColor="@color/yp_white"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="8dp"
-            style="@style/RoundedButtonRetry"/>
-    </LinearLayout>
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="102dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/placeholder_no_connection"
+                android:contentDescription="@string/no_connection" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/no_connection"
+                style="@style/TextNoResultNoSignal" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/retry"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/yp_black"
+                android:textColor="@color/yp_white"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="8dp"
+                style="@style/RoundedButtonRetry"/>
+        </LinearLayout>
+
+        <!-- Прогрессбар поверх всего -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="248dp"
+            app:indicatorColor="@color/progressBar"
+            android:visibility="gone"
+            android:indeterminate="true"/>
+    </FrameLayout>
 
 </LinearLayout>

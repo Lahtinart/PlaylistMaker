@@ -24,7 +24,7 @@
         android:id="@+id/playButton"
         android:layout_width="84dp"
         android:layout_height="84dp"
-        android:background="@drawable/ic_play"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_play"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
