@@ -3,11 +3,18 @@ package com.example.playlistmaker.data.repository
 import com.example.playlistmaker.data.network.NetworkClient
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.repository.SearchRepository
+import java.io.IOException
 
 class SearchRepositoryImpl : SearchRepository {
     override suspend fun searchTracks(term: String): List<Track> {
-        val response = NetworkClient.api.searchTracks(term).execute() // синхронный вызов для примера
-        return response.body()?.results?.map { apiTrack ->
+        // Пробрасываем IOException, чтобы ViewModel могла показать "нет сети"
+        val response = try {
+            NetworkClient.api.searchTracks(term)
+        } catch (e: IOException) {
+            throw e
+        }
+
+        return response.results.map { apiTrack ->
             Track(
                 trackId = apiTrack.trackId ?: "0",
                 trackName = apiTrack.trackName ?: "Unknown",
@@ -20,6 +27,6 @@ class SearchRepositoryImpl : SearchRepository {
                 country = apiTrack.country,
                 previewUrl = apiTrack.previewUrl
             )
-        } ?: emptyList()
+        }
     }
 }

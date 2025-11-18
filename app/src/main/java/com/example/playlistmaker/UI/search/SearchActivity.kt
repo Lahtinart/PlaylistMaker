@@ -116,27 +116,53 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        // Отслеживаем список треков
-        viewModel.tracks.observe(this) { tracks ->
-            if (tracks.isNotEmpty()) {
-                showState(SearchState.RESULTS, tracks)
-            } else {
-                showState(SearchState.NO_RESULTS)
-            }
-        }
 
-        // Отслеживаем ошибки поиска
+        // ---- 1) Ошибка сети — самый приоритетный сигнал ----
         viewModel.error.observe(this) { isError ->
             if (isError) {
-                showState(SearchState.ERROR)
+                // Показываем плейсхолдер "нет сети"
+                placeholderNoConnection.visibility = View.VISIBLE
+                placeholderNoResults.visibility = View.GONE
+                trackRecyclerView.visibility = View.GONE
+
+                // Историю скрываем
+                historyCard.visibility = View.GONE
+                btnClearHistory.visibility = View.GONE
             }
         }
 
-        // Можно дополнительно отслеживать индикатор загрузки
-        viewModel.loading.observe(this) { isLoading ->
-            if (isLoading) {
-                showState(SearchState.LOADING)
+        // ---- 2) Список треков / нет результатов / история ----
+        viewModel.tracks.observe(this) { tracks ->
+            val isError = viewModel.error.value == true
+            if (isError) return@observe
+
+            val isNoResults = tracks.isEmpty() && viewModel.searchText.isNotBlank()
+
+            when {
+                isNoResults -> {
+                    placeholderNoResults.visibility = View.VISIBLE
+                    placeholderNoConnection.visibility = View.GONE
+                    trackRecyclerView.visibility = RecyclerView.GONE
+                }
+
+                tracks.isNotEmpty() -> {
+                    placeholderNoResults.visibility = View.GONE
+                    placeholderNoConnection.visibility = View.GONE
+                    trackRecyclerView.visibility = RecyclerView.VISIBLE
+                    trackAdapter.updateTracks(tracks)
+                }
             }
+
+            // ---- История ----
+            val showHistory = viewModel.searchText.isBlank() && tracks.isNotEmpty()
+            historyCard.visibility = if (showHistory) View.VISIBLE else View.GONE
+            btnClearHistory.visibility = if (showHistory) View.VISIBLE else View.GONE
+        }
+
+
+        // ---- 3) Индикатор загрузки ----
+        viewModel.loading.observe(this) { isLoading ->
+            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
 
@@ -194,39 +220,35 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun showState(state: SearchState, tracks: List<Track> = emptyList()) {
+    private fun showState(state: SearchState) {
         when (state) {
             SearchState.LOADING -> {
                 progressBar.visibility = View.VISIBLE
-                trackRecyclerView.visibility = View.VISIBLE
-                hidePlaceholders()
-                hideHistoryCard()
-                trackAdapter.updateTracks(emptyList())
+                placeholderNoResults.visibility = View.GONE
+                placeholderNoConnection.visibility = View.GONE
             }
             SearchState.RESULTS -> {
                 progressBar.visibility = View.GONE
-                hidePlaceholders()
-                hideHistoryCard()
-                trackAdapter.updateTracks(tracks)
-                trackRecyclerView.visibility = View.VISIBLE
+                placeholderNoResults.visibility = View.GONE
+                placeholderNoConnection.visibility = View.GONE
             }
             SearchState.NO_RESULTS -> {
                 progressBar.visibility = View.GONE
-                hideHistoryCard()
                 placeholderNoResults.visibility = View.VISIBLE
                 placeholderNoConnection.visibility = View.GONE
-                trackAdapter.updateTracks(emptyList())
-                trackRecyclerView.visibility = RecyclerView.GONE
             }
             SearchState.ERROR -> {
                 progressBar.visibility = View.GONE
-                hideHistoryCard()
-                placeholderNoConnection.visibility = View.VISIBLE
                 placeholderNoResults.visibility = View.GONE
-                trackAdapter.updateTracks(emptyList())
-                trackRecyclerView.visibility = RecyclerView.GONE
+                placeholderNoConnection.visibility = View.VISIBLE
             }
         }
+
+        val showHistory = viewModel.searchText.isBlank() && viewModel.tracks.value?.isNotEmpty() == true
+        historyCard.visibility = if (showHistory) View.VISIBLE else View.GONE
+        btnClearHistory.visibility = if (showHistory) View.VISIBLE else View.GONE
+
+        trackRecyclerView.visibility = if (state == SearchState.RESULTS || showHistory) View.VISIBLE else View.GONE
     }
 
     private fun hidePlaceholders() {
