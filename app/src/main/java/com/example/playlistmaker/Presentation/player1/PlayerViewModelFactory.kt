@@ -1,7 +1,8 @@
-package com.example.playlistmaker.domain.interactor
+package com.example.playlistmaker.presentation.player1
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.playlistmaker.domain.interactor.PlayerInteractor
 import com.example.playlistmaker.presentation.player1.PlayerViewModel
 
 class PlayerViewModelFactory(

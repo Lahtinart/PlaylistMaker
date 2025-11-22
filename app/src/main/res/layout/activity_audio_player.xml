@@ -30,10 +30,13 @@
         app:layout_constraintTop_toBottomOf="@id/backButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/trackName"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintDimensionRatio="1:1"/>
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0"/>
 
     <!-- Название трека -->
     <TextView
@@ -47,10 +50,11 @@
         android:maxLines="1"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
+        android:paddingTop="12dp"
         app:layout_constraintTop_toBottomOf="@id/coverImage"
+        app:layout_constraintBottom_toTopOf="@id/artistName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingTop="12dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Исполнитель -->
     <TextView
@@ -65,6 +69,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         app:layout_constraintTop_toBottomOf="@id/trackName"
+        app:layout_constraintBottom_toTopOf="@id/controlButtons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -76,6 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/artistName"
+        app:layout_constraintBottom_toTopOf="@id/playbackProgress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -87,18 +93,21 @@
         android:text="00:00"
         style="@style/playbackProgress"
         app:layout_constraintTop_toBottomOf="@id/controlButtons"
+        app:layout_constraintBottom_toTopOf="@id/infoBlock"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Блок инфы: альбом, год, жанр, страна, длительность -->
+    <!-- Блок инфы -->
     <LinearLayout
         android:id="@+id/infoBlock"
         android:padding="16dp"
         android:layout_width="0dp"
-        android:layout_marginTop="4dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/playbackProgress"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -106,7 +115,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
 
@@ -138,8 +146,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
 
-
-            <!-- Левый лейбл -->
             <TextView
                 android:id="@+id/albumLabel"
                 android:layout_width="wrap_content"
@@ -150,7 +156,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <!-- Название альбома справа -->
             <TextView
                 android:id="@+id/albumName"
                 android:layout_width="0dp"
@@ -251,7 +256,6 @@
                 app:layout_constraintTop_toTopOf="@id/countryLabel"
                 app:layout_constraintBottom_toBottomOf="@id/countryLabel"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-        
 
     </LinearLayout>
 

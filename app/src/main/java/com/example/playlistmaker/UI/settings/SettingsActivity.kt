@@ -6,23 +6,19 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import com.example.playlistmaker.R
-import com.example.playlistmaker.data.storage.SettingsManager
+import com.example.playlistmaker.App
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textview.MaterialTextView
 
 class SettingsActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        // Читаем настройки через SettingsManager
-        val isDarkMode = SettingsManager.isDarkThemeEnabled(this)
-        AppCompatDelegate.setDefaultNightMode(
-            if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES
-            else AppCompatDelegate.MODE_NIGHT_NO
-        )
+    private val settingsRepository by lazy {
+        (application as App).settingsRepository
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
@@ -32,18 +28,15 @@ class SettingsActivity : AppCompatActivity() {
 
         // Переключатель темы
         val mySwitch = findViewById<SwitchMaterial>(R.id.my_switch)
-        mySwitch.isChecked = isDarkMode
+        mySwitch.isChecked = settingsRepository.isDarkThemeEnabled()
         mySwitch.setOnCheckedChangeListener { _, isChecked ->
-            SettingsManager.setDarkThemeEnabled(this, isChecked)
-            AppCompatDelegate.setDefaultNightMode(
-                if (isChecked) AppCompatDelegate.MODE_NIGHT_YES
-                else AppCompatDelegate.MODE_NIGHT_NO
-            )
+            settingsRepository.setDarkThemeEnabled(isChecked)
+            // Пересоздаём активити для применения темы
+            recreate()
         }
 
         // Шаринг приложения
-        val shareTextView = findViewById<MaterialTextView>(R.id.share_item)
-        shareTextView.setOnClickListener {
+        findViewById<MaterialTextView>(R.id.share_item).setOnClickListener {
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message))
@@ -53,8 +46,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         // Поддержка по email
-        val supportTextView = findViewById<MaterialTextView>(R.id.support_item)
-        supportTextView.setOnClickListener {
+        findViewById<MaterialTextView>(R.id.support_item).setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "message/rfc822"
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.mail_to)))
@@ -69,8 +61,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         // Пользовательское соглашение
-        val userAgreementTextView = findViewById<MaterialTextView>(R.id.user_agreement_item)
-        userAgreementTextView.setOnClickListener {
+        findViewById<MaterialTextView>(R.id.user_agreement_item).setOnClickListener {
             val url = getString(R.string.url_user_agreement)
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             try {

@@ -2,30 +2,25 @@ package com.example.playlistmaker
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.playlistmaker.data.storage.SettingsManager
+import com.example.playlistmaker.domain.repository.SettingsRepository
+import com.example.playlistmaker.data.repository.SettingsRepositoryImpl
 
 class App : Application() {
 
-    var darkTheme: Boolean = false
+    lateinit var settingsRepository: SettingsRepository
         private set
 
     override fun onCreate() {
         super.onCreate()
-        // Чтение темы через SettingsManager
-        darkTheme = SettingsManager.isDarkThemeEnabled(this)
-        applyTheme(darkTheme)
-    }
 
-    fun switchTheme(darkThemeEnabled: Boolean) {
-        darkTheme = darkThemeEnabled
-        SettingsManager.setDarkThemeEnabled(this, darkTheme)
-        applyTheme(darkTheme)
-    }
+        // Инициализация репозитория настроек
+        settingsRepository = SettingsRepositoryImpl(this)
 
-    private fun applyTheme(darkThemeEnabled: Boolean) {
-        AppCompatDelegate.setDefaultNightMode(
-            if (darkThemeEnabled) AppCompatDelegate.MODE_NIGHT_YES
-            else AppCompatDelegate.MODE_NIGHT_NO
-        )
+        // Применяем тему при старте приложения
+        if (settingsRepository.isDarkThemeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 }

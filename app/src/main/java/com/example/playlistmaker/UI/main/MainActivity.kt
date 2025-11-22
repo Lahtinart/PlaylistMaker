@@ -4,22 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import com.example.playlistmaker.ui.media.MediaLibraryActivity
-import com.example.playlistmaker.ui.settings.SettingsActivity
-import com.example.playlistmaker.data.storage.SettingsManager
-import com.example.playlistmaker.ui.search.SearchActivity
+import com.example.playlistmaker.App
 import com.example.playlistmaker.R
+import com.example.playlistmaker.ui.media.MediaLibraryActivity
+import com.example.playlistmaker.ui.search.SearchActivity
+import com.example.playlistmaker.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val isDarkMode = SettingsManager.isDarkThemeEnabled(this)
-        AppCompatDelegate.setDefaultNightMode(
-            if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES
-            else AppCompatDelegate.MODE_NIGHT_NO
-        )
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -40,4 +33,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-

@@ -1,14 +1,12 @@
 package com.example.playlistmaker.domain.interactor
 
-import android.content.Context
-import com.example.playlistmaker.data.storage.SettingsManager
+import com.example.playlistmaker.domain.repository.SettingsRepository
 
-class SettingsInteractor(private val context: Context) {
+class SettingsInteractor(private val settingsRepository: SettingsRepository) {
 
-    private val settingsManager = SettingsManager
+    fun isDarkThemeEnabled(): Boolean = settingsRepository.isDarkThemeEnabled()
 
-    fun isDarkThemeEnabled(): Boolean = settingsManager.isDarkThemeEnabled(context)
-
-    fun setDarkThemeEnabled(enabled: Boolean) = settingsManager.setDarkThemeEnabled(context, enabled)
+    fun setDarkThemeEnabled(enabled: Boolean) = settingsRepository.setDarkThemeEnabled(enabled)
 }
+
 

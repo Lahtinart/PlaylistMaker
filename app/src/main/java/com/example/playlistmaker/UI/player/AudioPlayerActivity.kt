@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.playlistmaker.domain.interactor.PlayerInteractor
-import com.example.playlistmaker.domain.interactor.PlayerViewModelFactory
+import com.example.playlistmaker.presentation.player1.PlayerViewModelFactory
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.presentation.player1.PlayerViewModel
 import com.example.playlistmaker.R

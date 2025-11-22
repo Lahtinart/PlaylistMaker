@@ -145,6 +145,7 @@
                 style="@style/RoundedButtonRetry"/>
         </LinearLayout>
 
+
         <!-- Прогрессбар поверх всего -->
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressBar"

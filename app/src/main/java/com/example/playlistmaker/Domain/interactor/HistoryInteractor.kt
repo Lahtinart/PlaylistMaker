@@ -1,13 +1,10 @@
 package com.example.playlistmaker.domain.interactor
 
-import com.example.playlistmaker.data.storage.SearchHistoryStorage
 import com.example.playlistmaker.domain.model.Track
+import com.example.playlistmaker.domain.repository.SearchHistoryRepository
 
-class HistoryInteractor(private val storage: SearchHistoryStorage) {
-
-    fun getHistory(): List<Track> = storage.getHistory()
-
-    fun addTrack(track: Track) = storage.addTrack(track)
-
-    fun clearHistory() = storage.clearHistory()
+class HistoryInteractor(private val repository: SearchHistoryRepository) {
+    fun getHistory(): List<Track> = repository.getHistory()
+    fun addTrack(track: Track) = repository.addTrack(track)
+    fun clearHistory() = repository.clearHistory()
 }
