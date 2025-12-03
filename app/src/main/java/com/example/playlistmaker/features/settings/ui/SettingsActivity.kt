@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmaker.app.App
 import com.example.playlistmaker.databinding.ActivitySettingsBinding
+import com.example.playlistmaker.features.settings.presentation.SettingsState
 import com.example.playlistmaker.features.settings.presentation.SettingsViewModel
 import com.example.playlistmaker.features.settings.presentation.SettingsViewModelFactory
 
@@ -31,17 +32,17 @@ class SettingsActivity : AppCompatActivity() {
     private fun setupViewModel() {
         val factory = SettingsViewModelFactory((application as App).settingsRepository)
         viewModel = ViewModelProvider(this, factory)[SettingsViewModel::class.java]
-        viewModel.loadTheme() // загрузка текущего состояния темы
+        viewModel.loadTheme()
     }
 
     private fun observeViewModel() {
-        viewModel.isDarkTheme.observe(this) { enabled ->
+        viewModel.state.observe(this) { state ->
             // временно отключаем listener, чтобы не вызвать toggleTheme при setChecked
             binding.mySwitch.setOnCheckedChangeListener(null)
-            binding.mySwitch.isChecked = enabled
+            binding.mySwitch.isChecked = state.isDarkTheme
             binding.mySwitch.setOnCheckedChangeListener { _, isChecked ->
                 viewModel.toggleTheme(isChecked)
-                recreate()
+                recreate() // чтобы применить тему
             }
         }
     }
@@ -51,12 +52,6 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        // Переключатель темы
-        binding.mySwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.toggleTheme(isChecked)
-            recreate() // чтобы применить тему
-        }
-
         // Share
         binding.shareItem.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND).apply {

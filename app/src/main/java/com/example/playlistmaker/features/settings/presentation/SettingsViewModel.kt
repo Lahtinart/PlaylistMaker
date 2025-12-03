@@ -3,19 +3,20 @@ package com.example.playlistmaker.features.settings.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.playlistmaker.features.settings.domain.repository.SettingsRepository
+import com.example.playlistmaker.features.settings.domain.interactor.SettingsInteractor
 
-class SettingsViewModel(private val settingsRepository: SettingsRepository) : ViewModel() {
+class SettingsViewModel(private val settingsInteractor: SettingsInteractor) : ViewModel() {
 
-    private val _isDarkTheme = MutableLiveData<Boolean>()
-    val isDarkTheme: LiveData<Boolean> = _isDarkTheme
+    private val _state = MutableLiveData(SettingsState())
+    val state: LiveData<SettingsState> = _state
 
     fun loadTheme() {
-        _isDarkTheme.value = settingsRepository.isDarkThemeEnabled()
+        val enabled = settingsInteractor.isDarkThemeEnabled()
+        _state.value = _state.value?.copy(isDarkTheme = enabled)
     }
 
     fun toggleTheme(enabled: Boolean) {
-        settingsRepository.setDarkThemeEnabled(enabled)
-        _isDarkTheme.value = enabled
+        settingsInteractor.setDarkThemeEnabled(enabled)
+        _state.value = _state.value?.copy(isDarkTheme = enabled)
     }
 }

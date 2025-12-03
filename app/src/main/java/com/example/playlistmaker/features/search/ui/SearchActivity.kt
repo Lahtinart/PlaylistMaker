@@ -80,46 +80,16 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.state.observe(this) { state ->
-            when (state) {
-                is SearchState.Idle -> {
-                    hideContent()
-                    binding.progressBar.visibility = View.GONE
-                }
+        viewModel.screenState.observe(this) { state ->
+            binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+            binding.trackRecyclerView.visibility = if (state.tracks.isNotEmpty()) View.VISIBLE else View.GONE
+            binding.clearHistoryInclude.root.visibility = if (state.showClearHistoryButton) View.VISIBLE else View.GONE
+            binding.placeholderNoResults.visibility = if (state.noResults) View.VISIBLE else View.GONE
+            binding.placeholderNoConnection.visibility = if (state.networkError != null) View.VISIBLE else View.GONE
 
-                is SearchState.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    hidePlaceholders()
-                    binding.trackRecyclerView.visibility = View.GONE
-                }
-
-                is SearchState.Content -> {
-                    binding.progressBar.visibility = View.GONE
-                    hidePlaceholders()
-                    trackAdapter.updateTracks(state.tracks)
-                    binding.trackRecyclerView.visibility = View.VISIBLE
-                }
-
-                is SearchState.NoResults -> {
-                    hideContent()
-                    binding.progressBar.visibility = View.GONE
-                    binding.placeholderNoResults.visibility = View.VISIBLE
-                }
-
-                is SearchState.NetworkError -> {
-                    hideContent()
-                    binding.progressBar.visibility = View.GONE
-                    binding.placeholderNoConnection.visibility = View.VISIBLE
-                }
-            }
+            if (state.tracks.isNotEmpty()) trackAdapter.updateTracks(state.tracks)
         }
 
-        viewModel.showClearHistoryButton.observe(this) { show ->
-            binding.clearHistoryInclude.root.visibility =
-                if (show) View.VISIBLE else View.GONE
-        }
-
-        // обработка открытия трека
         viewModel.openTrackEvent.observe(this) { event ->
             event.getContentIfNotHandled()?.let { track ->
                 val intent = Intent(this, AudioPlayerActivity::class.java).apply {
@@ -129,6 +99,7 @@ class SearchActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun setupListeners() {
         binding.searchEditText.afterTextChanged {

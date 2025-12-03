@@ -8,12 +8,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.playlistmaker.R
+import com.example.playlistmaker.features.player.domain.interactor.PlayerInteractor
+import com.example.playlistmaker.features.player.presentation.PlayerState
 import com.example.playlistmaker.features.player.presentation.PlayerViewModel
 import com.example.playlistmaker.features.player.presentation.PlayerViewModelFactory
-import com.example.playlistmaker.features.player.domain.interactor.PlayerInteractor
 import com.example.playlistmaker.features.search.domain.model.Track
 
 class AudioPlayerActivity : AppCompatActivity() {
@@ -83,16 +83,11 @@ class AudioPlayerActivity : AppCompatActivity() {
         }
 
         playButton.setOnClickListener {
-            val url = track.previewUrl
-            if (url.isNullOrEmpty()) {
-                Toast.makeText(this, "Preview not available", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (playerViewModel.isPlaying.value == true) {
-                playerViewModel.pause() // если играет — пауза
+            val state = playerViewModel.state.value
+            if (state?.isPlaying == true) {
+                playerViewModel.pause()
             } else {
-                playerViewModel.play(track) // если не играет — запускаем
+                playerViewModel.play(track)
             }
         }
 
@@ -104,19 +99,17 @@ class AudioPlayerActivity : AppCompatActivity() {
             Toast.makeText(this, "Add to playlist clicked", Toast.LENGTH_SHORT).show()
         }
 
+        playerViewModel.bindInteractor()
         observePlayer()
     }
 
     private fun observePlayer() {
-        playerViewModel.isPlaying.observe(this, Observer { isPlaying ->
-            playButton.setImageResource(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
-        })
-
-        playerViewModel.progress.observe(this, Observer { progress ->
-            val minutes = progress / 1000 / 60
-            val seconds = progress / 1000 % 60
+        playerViewModel.state.observe(this) { state: PlayerState ->
+            playButton.setImageResource(if (state.isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
+            val minutes = state.progress / 1000 / 60
+            val seconds = state.progress / 1000 % 60
             playbackProgress.text = String.format("%02d:%02d", minutes, seconds)
-        })
+        }
     }
 
     override fun onPause() {

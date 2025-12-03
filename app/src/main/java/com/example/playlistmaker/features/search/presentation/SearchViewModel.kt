@@ -16,14 +16,11 @@ class SearchViewModel(
     private val historyInteractor: HistoryInteractor
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<SearchState>(SearchState.Idle)
-    val state: LiveData<SearchState> = _state
+    private val _screenState = MutableLiveData(SearchScreenState())
+    val screenState: LiveData<SearchScreenState> = _screenState
 
     private val _openTrackEvent = MutableLiveData<Event<Track>>()
     val openTrackEvent: LiveData<Event<Track>> = _openTrackEvent
-
-    private val _showClearHistoryButton = MutableLiveData(false)
-    val showClearHistoryButton: LiveData<Boolean> = _showClearHistoryButton
 
     var currentQuery: String = ""
 
@@ -36,47 +33,70 @@ class SearchViewModel(
             return
         }
 
-        _state.value = SearchState.Loading
-        _showClearHistoryButton.value = false   // всегда скрываем при поиске/ошибках
+        _screenState.value = _screenState.value?.copy(
+            isLoading = true,
+            idle = false,
+            noResults = false,
+            networkError = null,
+            tracks = emptyList(),
+            showClearHistoryButton = false
+        )
 
         viewModelScope.launch {
             try {
                 val results = searchInteractor.execute(q)
-
-                _state.value =
-                    if (results.isEmpty()) SearchState.NoResults
-                    else SearchState.Content(results)
-
+                _screenState.value = _screenState.value?.copy(
+                    isLoading = false,
+                    idle = false,
+                    tracks = results,
+                    noResults = results.isEmpty(),
+                    showClearHistoryButton = false
+                )
             } catch (e: IOException) {
-                _state.value = SearchState.NetworkError(e.localizedMessage)
+                _screenState.value = _screenState.value?.copy(
+                    isLoading = false,
+                    idle = false,
+                    networkError = e.localizedMessage,
+                    tracks = emptyList()
+                )
             } catch (e: Exception) {
-                _state.value = SearchState.NetworkError(e.localizedMessage)
+                _screenState.value = _screenState.value?.copy(
+                    isLoading = false,
+                    idle = false,
+                    networkError = e.localizedMessage,
+                    tracks = emptyList()
+                )
             }
         }
     }
 
     fun loadHistory() {
         val history = historyInteractor.getHistory()
-
-        if (history.isEmpty()) {
-            _state.value = SearchState.Idle
-            _showClearHistoryButton.value = false
-        } else {
-            _state.value = SearchState.Content(history)
-            _showClearHistoryButton.value = true
-        }
+        _screenState.value = _screenState.value?.copy(
+            tracks = history,
+            idle = history.isEmpty(),
+            showClearHistoryButton = history.isNotEmpty(),
+            isLoading = false,
+            noResults = false,
+            networkError = null
+        )
     }
 
     fun addTrackToHistory(track: Track) = historyInteractor.addTrack(track)
 
     fun clearHistory() {
         historyInteractor.clearHistory()
-        _state.value = SearchState.Idle
-        _showClearHistoryButton.value = false
+        _screenState.value = _screenState.value?.copy(
+            tracks = emptyList(),
+            idle = true,
+            showClearHistoryButton = false,
+            isLoading = false,
+            noResults = false,
+            networkError = null
+        )
     }
 
     fun openTrack(track: Track) {
         _openTrackEvent.value = Event(track.copy())
     }
 }
-
