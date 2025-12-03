@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -34,6 +35,10 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -52,5 +57,14 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
     implementation ("com.google.code.gson:gson:2.10")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("androidx.core:core-ktx:1.16.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation ("androidx.activity:activity-ktx:1.6.1")
+
+    val moxyVersion = "2.2.2"
+
+    implementation("com.github.moxy-community:moxy:$moxyVersion")
+    implementation("com.github.moxy-community:moxy-androidx:$moxyVersion")
+    kapt("com.github.moxy-community:moxy-compiler:$moxyVersion")
 }

@@ -9,7 +9,7 @@
     android:paddingHorizontal="16dp"
     android:paddingBottom="28dp"
     android:paddingTop="10dp"
-    tools:context="com.example.playlistmaker.ui.main.MainActivity">
+    tools:context="com.example.playlistmaker.features.main.ui.MainActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBarMain"

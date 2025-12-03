@@ -7,7 +7,7 @@
     android:background="@color/yp_white"
     android:orientation="vertical"
     android:paddingTop="8dp"
-    tools:context="com.example.playlistmaker.ui.settings.SettingsActivity">
+    tools:context="com.example.playlistmaker.features.settings.ui.SettingsActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"

@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".App"
+        android:name=".app.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,21 +17,21 @@
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name="com.example.playlistmaker.ui.media.MediaLibraryActivity"
+            android:name="com.example.playlistmaker.features.media.ui.MediaLibraryActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.playlistmaker.ui.search.SearchActivity"
+            android:name="com.example.playlistmaker.features.search.ui.SearchActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:exported="false" />
         <activity
-            android:name="com.example.playlistmaker.ui.settings.SettingsActivity"
+            android:name="com.example.playlistmaker.features.settings.ui.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.playlistmaker.ui.player.AudioPlayerActivity"
+            android:name="com.example.playlistmaker.features.player.ui.AudioPlayerActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.example.playlistmaker.ui.main.MainActivity"
+            android:name="com.example.playlistmaker.features.main.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
