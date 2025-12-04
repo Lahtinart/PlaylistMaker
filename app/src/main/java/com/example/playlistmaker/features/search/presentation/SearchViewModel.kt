@@ -5,15 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.common.util.Event
-import com.example.playlistmaker.features.search.domain.interactor.HistoryInteractor
-import com.example.playlistmaker.features.search.domain.interactor.SearchTracksInteractor
+import com.example.playlistmaker.features.search.domain.interactor.IHistoryInteractor
+import com.example.playlistmaker.features.search.domain.interactor.ISearchTracksInteractor
 import com.example.playlistmaker.features.search.domain.model.Track
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 class SearchViewModel(
-    private val searchInteractor: SearchTracksInteractor,
-    private val historyInteractor: HistoryInteractor
+    private val searchInteractor: ISearchTracksInteractor,
+    private val historyInteractor: IHistoryInteractor
 ) : ViewModel() {
 
     private val _screenState = MutableLiveData(SearchScreenState())
@@ -45,27 +45,27 @@ class SearchViewModel(
         viewModelScope.launch {
             try {
                 val results = searchInteractor.execute(q)
-                _screenState.value = _screenState.value?.copy(
+                _screenState.postValue(_screenState.value?.copy(
                     isLoading = false,
                     idle = false,
                     tracks = results,
                     noResults = results.isEmpty(),
                     showClearHistoryButton = false
-                )
+                ))
             } catch (e: IOException) {
-                _screenState.value = _screenState.value?.copy(
+                _screenState.postValue(_screenState.value?.copy(
                     isLoading = false,
                     idle = false,
                     networkError = e.localizedMessage,
                     tracks = emptyList()
-                )
+                ))
             } catch (e: Exception) {
-                _screenState.value = _screenState.value?.copy(
+                _screenState.postValue(_screenState.value?.copy(
                     isLoading = false,
                     idle = false,
                     networkError = e.localizedMessage,
                     tracks = emptyList()
-                )
+                ))
             }
         }
     }

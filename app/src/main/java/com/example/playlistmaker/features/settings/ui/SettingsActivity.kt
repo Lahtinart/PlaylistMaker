@@ -30,9 +30,9 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        val factory = SettingsViewModelFactory((application as App).settingsRepository)
-        viewModel = ViewModelProvider(this, factory)[SettingsViewModel::class.java]
-        viewModel.loadTheme()
+        val app = application as App
+        val factory = SettingsViewModelFactory(app.settingsInteractor)
+        viewModel = ViewModelProvider(this, factory).get(SettingsViewModel::class.java)
     }
 
     private fun observeViewModel() {

@@ -87,8 +87,14 @@ class SearchActivity : AppCompatActivity() {
             binding.placeholderNoResults.visibility = if (state.noResults) View.VISIBLE else View.GONE
             binding.placeholderNoConnection.visibility = if (state.networkError != null) View.VISIBLE else View.GONE
 
+            // Новая логика для history_card
+            binding.historyCard.visibility =
+                if (state.tracks.isNotEmpty() && viewModel.currentQuery.isBlank()) View.VISIBLE
+                else View.GONE
+
             if (state.tracks.isNotEmpty()) trackAdapter.updateTracks(state.tracks)
         }
+
 
         viewModel.openTrackEvent.observe(this) { event ->
             event.getContentIfNotHandled()?.let { track ->

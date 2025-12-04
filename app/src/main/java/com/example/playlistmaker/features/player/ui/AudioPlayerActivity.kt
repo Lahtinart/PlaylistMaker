@@ -10,7 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.playlistmaker.R
-import com.example.playlistmaker.features.player.domain.interactor.PlayerInteractor
+import com.example.playlistmaker.di.DiContainer
 import com.example.playlistmaker.features.player.presentation.PlayerState
 import com.example.playlistmaker.features.player.presentation.PlayerViewModel
 import com.example.playlistmaker.features.player.presentation.PlayerViewModelFactory
@@ -21,9 +21,9 @@ class AudioPlayerActivity : AppCompatActivity() {
     private lateinit var playButton: ImageButton
     private lateinit var playbackProgress: TextView
 
-    private val playerInteractor = PlayerInteractor()
+
     private val playerViewModel: PlayerViewModel by viewModels {
-        PlayerViewModelFactory(playerInteractor)
+        PlayerViewModelFactory(applicationContext)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

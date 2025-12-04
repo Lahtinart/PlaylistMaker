@@ -25,7 +25,7 @@
         style="@style/Widget.PlayListMaker.MainButton"
         android:text="@string/title_search"
         app:icon="@drawable/search_light_mode"
-        android:layout_marginTop="80dp" />
+        android:layout_marginTop="24dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button2"

@@ -31,7 +31,7 @@
     <dimen name="track_name_margin_start">12dp</dimen>
     <dimen name="track_name_margin_top">6dp</dimen>
     <dimen name="track_name_margin_end">44dp</dimen>
-    <dimen name="info_container_margin_top">4dp</dimen>
+    <dimen name="info_container_margin_top">1dp</dimen>
     <dimen name="info_container_margin_end">44dp</dimen>
     <dimen name="dot_icon_margin_horizontal">2dp</dimen>
 

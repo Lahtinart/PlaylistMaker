@@ -1,26 +1,27 @@
-package com.example.playlistmaker.features.player.domain.interactor
+package com.example.playlistmaker.features.player.data.interactor
 
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.playlistmaker.features.player.domain.interactor.IPlayerInteractor
 import com.example.playlistmaker.features.search.domain.model.Track
 
-class PlayerInteractor {
+class PlayerInteractorImpl : IPlayerInteractor {
 
     private var mediaPlayer: MediaPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
 
     private val _isPlaying = MutableLiveData(false)
-    val isPlaying: LiveData<Boolean> = _isPlaying
+    override val isPlaying: LiveData<Boolean> = _isPlaying
 
     private val _progress = MutableLiveData(0)
-    val progress: LiveData<Int> = _progress
+    override val progress: LiveData<Int> = _progress
 
     private var currentTrack: Track? = null
 
-    fun play(track: Track) {
+    override fun play(track: Track) {
         if (currentTrack != track) {
             stop()
             currentTrack = track
@@ -30,12 +31,12 @@ class PlayerInteractor {
         }
     }
 
-    fun pause() {
+    override fun pause() {
         mediaPlayer?.pause()
         _isPlaying.value = false
     }
 
-    fun stop() {
+    override fun stop() {
         mediaPlayer?.stop()
         mediaPlayer?.release()
         mediaPlayer = null
