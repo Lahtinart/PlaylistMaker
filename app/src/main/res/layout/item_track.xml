@@ -5,8 +5,7 @@
     android:minHeight="@dimen/track_item_min_height"
     android:paddingStart="@dimen/search_margin_start"
     android:paddingEnd="0dp"
-    android:paddingTop="@dimen/track_item_padding_top"
-    android:paddingBottom="@dimen/track_item_padding_bottom"
+
     android:orientation="horizontal">
 
     <!-- Картинка трека -->
@@ -14,37 +13,42 @@
         android:id="@+id/track_image"
         android:layout_width="@dimen/track_image_size"
         android:layout_height="@dimen/track_image_size"
+        android:layout_marginTop="@dimen/track_item_padding_bottom"
+        android:layout_marginBottom="@dimen/track_item_padding_bottom"
         android:scaleType="centerCrop"
         android:contentDescription="@string/track_cover"
         android:background="@drawable/placeholder"/>
 
     <!-- Контейнер для названия трека и артиста+время -->
+
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="286dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/track_name_margin_start"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginStart="@dimen/track_name_margin_start">
+
+        android:orientation="vertical">
 
         <!-- Название трека -->
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/track_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorOnBackground"
-            android:textSize="@dimen/track_name_text_size"
-            android:fontFamily="@font/ys_display_regular"
-            android:textFontWeight="400"
-            android:maxLines="1"
+            android:layout_marginTop="14dp"
             android:ellipsize="end"
-            android:text="Название трека"/>
+            android:fontFamily="@font/ys_display_regular"
+            android:maxLines="1"
+            android:text="Название трека"
+            android:textColor="?attr/colorOnBackground"
+            android:textFontWeight="400"
+            android:textSize="@dimen/track_name_text_size" />
 
         <!-- Горизонтальный контейнер для артиста и времени -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/info_container_margin_top">
+            android:layout_marginTop="@dimen/info_container_margin_top"
+            android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/artist_name"
@@ -52,27 +56,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:singleLine="true"
-                android:textColor="@color/yp_text_gray"
-                android:textSize="@dimen/info_text_size"
                 android:fontFamily="@font/ys_display_regular"
+                android:singleLine="true"
+                android:text="Длинное имя артиста"
+                android:textColor="@color/yp_text_gray"
                 android:textFontWeight="400"
-                android:text="Длинное имя артиста"/>
+                android:textSize="@dimen/info_text_size" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/track_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/yp_text_gray"
-                android:textSize="@dimen/info_text_size"
-                android:fontFamily="@font/ys_display_regular"
-                android:textFontWeight="400"
                 android:layout_marginStart="@dimen/dot_icon_margin_horizontal"
-                android:text="• 3:45"/>
+                android:fontFamily="@font/ys_display_regular"
+                android:text="• 3:45"
+                android:textColor="@color/yp_text_gray"
+                android:textFontWeight="400"
+                android:textSize="@dimen/info_text_size" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Стрелка -->
     <ImageView
         android:id="@+id/arrow_icon"
         android:layout_width="@dimen/arrow_icon_size"

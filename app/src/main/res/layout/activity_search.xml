@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/yp_white"
     android:orientation="vertical"
-    tools:context="com.example.playlistmaker.ui.search.SearchActivity">
+    tools:context="com.example.playlistmaker.features.search.ui.SearchActivity">
 
     <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
@@ -76,9 +76,12 @@
                 android:scrollbars="vertical" />
 
             <FrameLayout
-                android:id="@+id/clear_history_container"
+                android:id="@+id/clearHistoryContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <include
+                android:id="@+id/clearHistoryInclude"
+                layout="@layout/item_clear_history"/>
         </LinearLayout>
 
         <!-- Плейсхолдер: нет результатов -->
