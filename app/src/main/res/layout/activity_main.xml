@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/yp_blue"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
+
     android:paddingBottom="28dp"
     android:paddingTop="10dp"
     tools:context="com.example.playlistmaker.features.main.ui.MainActivity">
@@ -25,6 +25,8 @@
         style="@style/Widget.PlayListMaker.MainButton"
         android:text="@string/title_search"
         app:icon="@drawable/search_light_mode"
+        android:layout_marginStart="@dimen/search_margin_start"
+        android:layout_marginEnd="@dimen/search_margin_end"
         android:layout_marginTop="24dp" />
 
     <com.google.android.material.button.MaterialButton
@@ -32,6 +34,8 @@
         style="@style/Widget.PlayListMaker.MainButton"
         android:text="@string/title_media"
         app:icon="@drawable/library_light_mode"
+        android:layout_marginStart="@dimen/search_margin_start"
+        android:layout_marginEnd="@dimen/search_margin_end"
         android:layout_marginTop="16dp" />
 
     <com.google.android.material.button.MaterialButton
@@ -39,6 +43,8 @@
         style="@style/Widget.PlayListMaker.MainButton"
         android:text="@string/title_settings"
         app:icon="@drawable/settings_light_mode"
+        android:layout_marginStart="@dimen/search_margin_start"
+        android:layout_marginEnd="@dimen/search_margin_end"
         android:layout_marginTop="16dp" />
 
 </LinearLayout>

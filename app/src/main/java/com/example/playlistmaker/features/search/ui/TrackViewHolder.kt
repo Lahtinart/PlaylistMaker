@@ -18,8 +18,8 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val trackImage: ImageView = itemView.findViewById(R.id.track_image)
 
     fun bind(track: Track) {
-        trackName.text = track.trackName ?: "Unknown"
-        artistName.text = track.artistName ?: "Unknown"
+        trackName.text = track.trackName
+        artistName.text = track.artistName
 
         val totalMillis = track.trackTimeMillis.toLongOrNull() ?: 0L
         val minutes = totalMillis / 1000 / 60
@@ -27,7 +27,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         trackTime.text = String.format(Locale.getDefault(), "• %d:%02d", minutes, seconds)
 
         Glide.with(trackImage.context)
-            .load(track.artworkUrl100 ?: "")
+            .load(track.artworkUrl100)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .transform(RoundedCorners(dpToPx(2)))

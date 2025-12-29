@@ -3,8 +3,8 @@ package com.example.playlistmaker.features.search.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.features.search.domain.model.Track
 import com.example.playlistmaker.R
+import com.example.playlistmaker.features.search.domain.model.Track
 
 class TrackAdapter(
     private val tracks: MutableList<Track>,

@@ -23,12 +23,12 @@
     <dimen name="track_item_padding_bottom">8dp</dimen>
 
     <!-- Размеры изображений -->
-    <dimen name="track_image_size">56dp</dimen>
+    <dimen name="track_image_size">45dp</dimen>
     <dimen name="arrow_icon_size">24dp</dimen>
     <dimen name="dot_icon_size">4dp</dimen>
 
     <!-- Отступы между элементами -->
-    <dimen name="track_name_margin_start">12dp</dimen>
+    <dimen name="track_name_margin_start">8dp</dimen>
     <dimen name="track_name_margin_top">6dp</dimen>
     <dimen name="track_name_margin_end">44dp</dimen>
     <dimen name="info_container_margin_top">1dp</dimen>

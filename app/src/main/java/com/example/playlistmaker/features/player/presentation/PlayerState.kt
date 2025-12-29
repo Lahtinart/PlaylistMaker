@@ -6,5 +6,4 @@ data class PlayerState(
     val track: Track? = null,
     val isPlaying: Boolean = false,
     val progress: Int = 0,
-    val error: String? = null
 )

@@ -33,6 +33,7 @@ class SettingsActivity : AppCompatActivity() {
         val app = application as App
         val factory = SettingsViewModelFactory(app.settingsInteractor)
         viewModel = ViewModelProvider(this, factory).get(SettingsViewModel::class.java)
+        viewModel.loadTheme()
     }
 
     private fun observeViewModel() {

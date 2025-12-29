@@ -10,20 +10,18 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.playlistmaker.R
-import com.example.playlistmaker.di.DiContainer
 import com.example.playlistmaker.features.player.presentation.PlayerState
 import com.example.playlistmaker.features.player.presentation.PlayerViewModel
 import com.example.playlistmaker.features.player.presentation.PlayerViewModelFactory
-import com.example.playlistmaker.features.search.domain.model.Track
+import com.example.playlistmaker.features.search.data.dto.ParcelizedTrack
 
 class AudioPlayerActivity : AppCompatActivity() {
 
     private lateinit var playButton: ImageButton
     private lateinit var playbackProgress: TextView
 
-
     private val playerViewModel: PlayerViewModel by viewModels {
-        PlayerViewModelFactory(applicationContext)
+        PlayerViewModelFactory()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,25 +43,35 @@ class AudioPlayerActivity : AppCompatActivity() {
         val playlistButton = findViewById<ImageButton>(R.id.playlistButton)
         val favoriteButton = findViewById<ImageButton>(R.id.favoriteButton)
 
-        val track = intent.getParcelableExtra<Track>("track") ?: run {
+        val parcelizedTrack = intent.getParcelableExtra<ParcelizedTrack>("track") ?: run {
             Toast.makeText(this, "Track not found", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        // UI
+        val track = parcelizedTrack.toDomain()
+
+        // UI отображение
         trackName.text = track.trackName
         artistName.text = track.artistName
-        if (track.collectionName.isNullOrEmpty()) albumName.visibility = View.GONE else albumName.apply {
-            visibility = View.VISIBLE
-            text = track.collectionName
+
+        if (track.collectionName.isNullOrEmpty()) {
+            albumName.visibility = View.GONE
+        } else {
+            albumName.visibility = View.VISIBLE
+            albumName.text = track.collectionName
         }
-        if (track.releaseDate.isNullOrEmpty()) releaseYear.visibility = View.GONE else releaseYear.apply {
-            visibility = View.VISIBLE
-            text = track.releaseDate.take(4)
+
+        if (track.releaseDate.isNullOrEmpty()) {
+            releaseYear.visibility = View.GONE
+        } else {
+            releaseYear.visibility = View.VISIBLE
+            releaseYear.text = track.releaseDate.take(4)
         }
+
         genre.text = track.primaryGenreName ?: ""
         country.text = track.country ?: ""
+
         val totalMillis = track.trackTimeMillis.toLongOrNull() ?: 0L
         val minutes = totalMillis / 1000 / 60
         val seconds = totalMillis / 1000 % 60
@@ -76,6 +84,7 @@ class AudioPlayerActivity : AppCompatActivity() {
             .into(coverImage)
 
         playbackProgress.text = "00:00"
+
 
         backButton.setOnClickListener {
             playerViewModel.stop()
@@ -99,13 +108,14 @@ class AudioPlayerActivity : AppCompatActivity() {
             Toast.makeText(this, "Add to playlist clicked", Toast.LENGTH_SHORT).show()
         }
 
-        playerViewModel.bindInteractor()
-        observePlayer()
+        observePlayerState()
     }
 
-    private fun observePlayer() {
+    private fun observePlayerState() {
         playerViewModel.state.observe(this) { state: PlayerState ->
-            playButton.setImageResource(if (state.isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
+            playButton.setImageResource(
+                if (state.isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+            )
             val minutes = state.progress / 1000 / 60
             val seconds = state.progress / 1000 % 60
             playbackProgress.text = String.format("%02d:%02d", minutes, seconds)

@@ -12,11 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmaker.databinding.ActivitySearchBinding
+import com.example.playlistmaker.features.player.ui.AudioPlayerActivity
+import com.example.playlistmaker.features.search.data.dto.ParcelizedTrack
 import com.example.playlistmaker.features.search.domain.model.Track
-import com.example.playlistmaker.features.search.presentation.SearchState
 import com.example.playlistmaker.features.search.presentation.SearchViewModel
 import com.example.playlistmaker.features.search.presentation.SearchViewModelFactory
-import com.example.playlistmaker.features.player.ui.AudioPlayerActivity
 import com.google.android.material.textfield.TextInputEditText
 
 class SearchActivity : AppCompatActivity() {
@@ -64,7 +64,6 @@ class SearchActivity : AppCompatActivity() {
     private fun setupAdapter() {
         trackAdapter = TrackAdapter(mutableListOf()) { track ->
             if (clickDebounce()) {
-                // ВАЖНО: сначала открыть трек, потом — сохранить
                 viewModel.openTrack(track)
                 viewModel.addTrackToHistory(track)
             }
@@ -87,25 +86,25 @@ class SearchActivity : AppCompatActivity() {
             binding.placeholderNoResults.visibility = if (state.noResults) View.VISIBLE else View.GONE
             binding.placeholderNoConnection.visibility = if (state.networkError != null) View.VISIBLE else View.GONE
 
-            // Новая логика для history_card
+            // История отображается только если есть история и поле поиска пустое
             binding.historyCard.visibility =
                 if (state.tracks.isNotEmpty() && viewModel.currentQuery.isBlank()) View.VISIBLE
                 else View.GONE
 
-            if (state.tracks.isNotEmpty()) trackAdapter.updateTracks(state.tracks)
+            if (state.tracks.isNotEmpty()) {
+                trackAdapter.updateTracks(state.tracks)
+            }
         }
-
 
         viewModel.openTrackEvent.observe(this) { event ->
             event.getContentIfNotHandled()?.let { track ->
                 val intent = Intent(this, AudioPlayerActivity::class.java).apply {
-                    putExtra("track", track)
+                    putExtra("track", ParcelizedTrack.make(track))
                 }
                 startActivity(intent)
             }
         }
     }
-
 
     private fun setupListeners() {
         binding.searchEditText.afterTextChanged {
@@ -118,8 +117,6 @@ class SearchActivity : AppCompatActivity() {
                 viewModel.loadHistory()
             } else {
                 handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
-                // УБРАНО: progressBar.visibility = VISIBLE
-                // ViewModel сам включит Loading при реальном поиске
             }
         }
 
@@ -140,9 +137,12 @@ class SearchActivity : AppCompatActivity() {
             binding.trackRecyclerView.visibility = View.GONE
             hidePlaceholders()
             viewModel.currentQuery = ""
+
+            // Скрываем историю и кнопку очистки истории
+            binding.historyCard.visibility = View.GONE
+            binding.clearHistoryInclude.root.visibility = View.GONE
         }
 
-        // ————— ДОБАВЛЕН НАСТОЯЩИЙ обработчик очистки истории —————
         binding.clearHistoryInclude.btnClearHistoryItem.setOnClickListener {
             if (clickDebounce()) {
                 viewModel.clearHistory()
@@ -157,11 +157,6 @@ class SearchActivity : AppCompatActivity() {
             return
         }
         viewModel.search(q)
-    }
-
-    private fun hideContent() {
-        binding.trackRecyclerView.visibility = View.GONE
-        hidePlaceholders()
     }
 
     private fun hidePlaceholders() {
